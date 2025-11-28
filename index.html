@@ -7,58 +7,103 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
     <style>
-    /* Custom styles for the dark, gem-like theme */
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: #0d0a1b; /* Dark, deep purple/blue background */
-        color: #e5e5e5;
-    }
-    /* Custom scrollbar for a cleaner look */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #4a044e;
-        border-radius: 4px;
-    }
-    ::-webkit-scrollbar-track {
-        background: #1f083d;
-    }
-    /* Highlight for main tab */
-    .tab-button.active {
-        @apply border-b-4 border-red-500 text-red-400 font-semibold;
-    }
-    /* Highlight for gallery category filter */
-    .category-button.active {
-        @apply bg-red-600 text-white shadow-lg shadow-red-500/50;
-    }
-
-    /* --- Glowing Red Gem Effect for Logo Text --- */
-    @keyframes redGlow {
-        0%, 100% {
-            text-shadow: 
-                0 0 5px #ff4d4d,
-                0 0 10px #ff1a1a,
-                0 0 15px #ff0000,
-                0 0 20px #ff3333;
-            color: #ff4d4d;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0a1b;
+            color: #e5e5e5;
         }
-        50% {
-            text-shadow: 
-                0 0 15px #ff4d4d,
-                0 0 25px #ff1a1a,
-                0 0 35px #ff0000,
-                0 0 45px #ff3333;
-            color: #ff6666;
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #4a044e; border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: #1f083d; }
+
+        .tab-button.active {
+            @apply border-b-4 border-red-500 text-red-400 font-semibold;
         }
-    }
 
-    .logo-text {
-        animation: redGlow 2s infinite ease-in-out;
-    }
+        .category-button.active {
+            @apply bg-red-600 text-white shadow-lg shadow-red-500/50;
+        }
 
-    /* --- PRELOADER ANIMATION STYLES (Unchanged) --- */
+        /* FAQ logo glow animation */
+        .faq-logo-glow {
+            animation: redGlow 2s infinite ease-in-out;
+        }
+
+        @keyframes redGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff1a1a, 0 0 15px #ff0000, 0 0 20px #ff3333;
+                color: #ff4d4d;
+            }
+            50% {
+                text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff1a1a, 0 0 35px #ff0000, 0 0 45px #ff3333;
+                color: #ff6666;
+            }
+        }
+
+        /* RGB glow animation for THE GEMNASIUM header */
+        .logo-text {
+            animation: rgbGlow 6s infinite linear;
+            font-weight: 800;
+            text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d, 0 0 15px #ff4d4d, 0 0 20px #ff4d4d;
+        }
+
+        @keyframes rgbGlow {
+            0%   { color: rgb(255, 77, 77);   text-shadow: 0 0 5px rgb(255,77,77), 0 0 10px rgb(255,77,77), 0 0 15px rgb(255,77,77), 0 0 20px rgb(255,77,77); }
+            25%  { color: rgb(255, 200, 77);  text-shadow: 0 0 5px rgb(255,200,77), 0 0 10px rgb(255,200,77), 0 0 15px rgb(255,200,77), 0 0 20px rgb(255,200,77); }
+            50%  { color: rgb(77, 255, 77);   text-shadow: 0 0 5px rgb(77,255,77), 0 0 10px rgb(77,255,77), 0 0 15px rgb(77,255,77), 0 0 20px rgb(77,255,77); }
+            75%  { color: rgb(77, 77, 255);   text-shadow: 0 0 5px rgb(77,77,255), 0 0 10px rgb(77,77,255), 0 0 15px rgb(77,77,255), 0 0 20px rgb(77,77,255); }
+            100% { color: rgb(255, 77, 77);   text-shadow: 0 0 5px rgb(255,77,77), 0 0 10px rgb(255,77,77), 0 0 15px rgb(255,77,77), 0 0 20px rgb(255,77,77); }
+        }
+
+        @keyframes shine {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+                filter: drop-shadow(0 0 5px rgba(248, 113, 113, 0.7));
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+                filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.9));
+            }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #0d0a1b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+        }
+
+        #preloader .diamond-logo { animation: shine 1.5s infinite ease-in-out; }
+        .fade-out { animation: fadeOut 0.8s forwards; }
+
+        /* FAQ DROPDOWN ANIMATION */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1.0s ease, opacity 1.0s ease;
+            opacity: 0;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+            opacity: 1;
+        }
+
+
     @keyframes shine {
         0%, 100% {
             transform: scale(1);
@@ -100,358 +145,477 @@
     .fade-out {
         animation: fadeOut 0.8s forwards;
     }
+
+    /* FAQ DROPDOWN ANIMATION */
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, opacity 0.4s ease;
+        opacity: 0;
+    }
+
+    .faq-item.open .faq-answer {
+        max-height: 300px;
+        opacity: 1;
+    }
+
+/* FALLING / SPINNING DIAMONDS  */
+#diamond-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.diamond {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: url('images/logo.png') no-repeat center/contain;
+    opacity: 0.5;
+    animation: fallSpin linear infinite;
+}
+
+@keyframes fallSpin {
+    0% {
+        transform: translateY(-60px) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
 </style>
 </head>
 <body class="min-h-screen antialiased">
+<div id="diamond-container"></div>
 
 <div id="preloader" class="transition-opacity duration-700">
-        <div class="diamond-logo text-red-500">
-            <img src="images/logo.png" alt="Gemnasium Logo" class="w-28 h-28 sm:w-36 sm:h-36 object-contain">
+    <div class="diamond-logo text-red-500">
+        <img src="images/logo.png" alt="Gemnasium Logo" class="w-28 h-28 sm:w-36 sm:h-36 object-contain">
+    </div>
+</div>
+
+<div class="relative z-10 max-w-7xl mx-auto p-4 sm:p-8">
+
+<header class="relative flex flex-col items-center justify-center space-y-4 py-8 md:py-12 border-b border-gray-800">
+    <div class="text-red-500 hover:rotate-3 transition-transform duration-300">
+        <img src="images/logo.png" alt="Gemnasium Logo" class="w-16 h-16 sm:w-20 sm:h-20 object-contain">
+    </div>
+<h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight logo-text" id="logo-text">
+    THE GEMNASIUM
+</h1>
+    <p class="text-gray-400 text-lg">Selling the rarest Sports Cards, TCGs, Comics, and Fine Art.</p>
+</header>
+
+<nav class="mt-8 mb-6 border-b border-gray-800">
+    <div class="flex flex-wrap justify-center sm:justify-start -mb-px space-x-2 sm:space-x-8" role="tablist">
+
+        <button id="tab-home" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('home')">Home</button>
+        <button id="tab-gallery" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('gallery')">Gallery</button>
+        <button id="tab-reviews" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('reviews')">Reviews</button>
+        <button id="tab-contact" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('contact')">Contact</button>
+
+        <!-- NEW FAQ TAB BUTTON -->
+        <button id="tab-faq" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('faq')">
+            FAQ
+        </button>
+    </div>
+</nav>
+
+<div id="tab-content">
+
+    <!-- HOME TAB -->
+    <div id="content-home" class="tab-content space-y-6 pt-6">
+
+        <div class="bg-gray-800/50 p-6 rounded-xl shadow-lg border border-red-500/30 space-y-4">
+            <h2 class="text-3xl font-bold text-red-400 mb-2">Welcome to the GEMNASIUM</h2>
+
+            <p class="text-gray-300 leading-relaxed">
+                <img src="images/logo.png" class="inline-block w-5 h-5 mr-1 align-text-top">
+                <strong>The Gemnasium</strong> is your curated destination for rare and collectible items —
+                from Cards, Comics, Kicks, and Antiques to Artwork and other one-of-a-kind Gems.
+            </p>
+
+            <p class="text-gray-300 leading-relaxed">
+                <img src="images/logo.png" class="inline-block w-5 h-5 mr-1 align-text-top">
+                We pride ourselves on offering a premium experience: clear communication,
+                transparency, reliable service, and smooth transactions.
+            </p>
+
+            <p class="text-gray-300 leading-relaxed">
+                <img src="images/logo.png" class="inline-block w-5 h-5 mr-1 align-text-top">
+                Don’t hesitate to reach out with any questions — we’re always here to help.
+            </p>
+
+            <p class="text-gray-300 pt-2 italic text-gray-400">
+                *This section is still under construction.*
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
+                <span class="text-4xl text-red-500 mb-2 block">🏈</span>
+                <p class="font-semibold">Sports Cards</p>
+                <p class="text-sm text-gray-400">NFL - MLB - NBA - UFC</p>
+            </div>
+
+            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
+                <span class="text-4xl text-red-500 mb-2 block">🃏</span>
+                <p class="font-semibold">TCG</p>
+                <p class="text-sm text-gray-400">Marvel - Dragon Ball - Pokemon</p>
+            </div>
+
+            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
+                <span class="text-4xl text-red-500 mb-2 block">🦸</span>
+                <p class="font-semibold">Comics</p>
+                <p class="text-sm text-gray-400">Marvel - DC - Independent</p>
+            </div>
+
+            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
+                <span class="text-4xl text-red-500 mb-2 block">🎨</span>
+                <p class="font-semibold">Other Gems</p>
+                <p class="text-sm text-gray-400">Artwork - Gear</p>
+            </div>
         </div>
     </div>
-    
-    <div class="max-w-7xl mx-auto p-4 sm:p-8">
 
-        <header class="flex flex-col items-center justify-center space-y-4 py-8 md:py-12 border-b border-gray-800">
-            <div class="text-red-500 hover:rotate-3 transition-transform duration-300">
-                <img src="images/logo.png" alt="Gemnasium Logo" class="w-16 h-16 sm:w-20 sm:h-20 object-contain">
-            </div>
-            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight logo-text">
-                THE GEMNASIUM
-            </h1>
-            <p class="text-gray-400 text-lg">Selling the rarest Sports Cards, TCGs, Comics, and Fine Art.</p>
-        </header>
+    <!-- GALLERY TAB -->
+    <div id="content-gallery" class="tab-content pt-6 hidden">
+        <h2 class="text-3xl font-bold text-red-400 mb-6">The Current Collection</h2>
 
-        <nav class="mt-8 mb-6 border-b border-gray-800">
-            <div class="flex flex-wrap justify-center sm:justify-start -mb-px space-x-2 sm:space-x-8" role="tablist">
-                <button
-                    id="tab-home"
-                    class="tab-button inline-flex items-center justify-center px-4 py-3 text-sm transition duration-150 ease-in-out hover:text-red-400 focus:outline-none"
-                    onclick="switchTab('home')"
-                    role="tab"
-                    aria-controls="content-home"
-                    aria-selected="true"
-                >
-                    Home
-                </button>
-                <button
-                    id="tab-gallery"
-                    class="tab-button inline-flex items-center justify-center px-4 py-3 text-sm transition duration-150 ease-in-out hover:text-red-400 focus:outline-none"
-                    onclick="switchTab('gallery')"
-                    role="tab"
-                    aria-controls="content-gallery"
-                    aria-selected="false"
-                >
-                    Gallery
-                </button>
-                <button
-                    id="tab-analysis"
-                    class="tab-button inline-flex items-center justify-center px-4 py-3 text-sm transition duration-150 ease-in-out hover:text-red-400 focus:outline-none"
-                    onclick="switchTab('analysis')"
-                    role="tab"
-                    aria-controls="content-analysis"
-                    aria-selected="false"
-                >
-                    Analysis
-                </button>
-                <button
-                    id="tab-contact"
-                    class="tab-button inline-flex items-center justify-center px-4 py-3 text-sm transition duration-150 ease-in-out hover:text-red-400 focus:outline-none"
-                    onclick="switchTab('contact')"
-                    role="tab"
-                    aria-controls="content-contact"
-                    aria-selected="false"
-                >
-                    Contact
-                </button>
+        <nav class="mb-8 border-b border-gray-800 pb-4">
+            <div class="flex flex-wrap justify-center sm:justify-start gap-3">
+                <button class="category-button active px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
+                        onclick="filterGallery('all', this)">All Artifacts</button>
+
+                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
+                        onclick="filterGallery('sports', this)">Sports Cards</button>
+
+                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
+                        onclick="filterGallery('tcg', this)">TCG</button>
+
+                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
+                        onclick="filterGallery('comics', this)">Comics & Marvel</button>
+
+                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
+                        onclick="filterGallery('art', this)">Fine Art</button>
             </div>
         </nav>
 
-        <div id="tab-content">
-            
-            <div id="content-home" class="tab-content space-y-6 pt-6" role="tabpanel" aria-labelledby="tab-home">
-                <div class="bg-gray-800/50 p-6 rounded-xl shadow-lg border border-red-500/30">
-                    <h2 class="text-3xl font-bold text-red-400 mb-4">Welcome to the GEMNASIUM</h2>
-                    <p class="text-gray-300 leading-relaxed">
-                        The Gemnasium About info will be here probably
-                    </p>
-                    <p class="text-gray-300 leading-relaxed mt-4">
-                        Under Construction.
-                    </p>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="bg-gray-800 p-4 rounded-lg shadow-inner text-center">
-                        <span class="text-4xl text-red-500 block mb-2">🏈</span>
-                        <p class="font-semibold">Sports Cards</p>
-                        <p class="text-sm text-gray-400">Hamz give me some info on this</p>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg shadow-inner text-center">
-                        <span class="text-4xl text-red-500 block mb-2">🃏</span>
-                        <p class="font-semibold">TCG/Gaming</p>
-                        <p class="text-sm text-gray-400">Hamz give me some info on this</p>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg shadow-inner text-center">
-                        <span class="text-4xl text-red-500 block mb-2">🦸</span>
-                        <p class="font-semibold">Comics & Marvel</p>
-                        <p class="text-sm text-gray-400">Hamz give me some info on this.</p>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg shadow-inner text-center">
-                        <span class="text-4xl text-red-500 block mb-2">🎨</span>
-                        <p class="font-semibold">Fine Art/Prints</p>
-                        <p class="text-sm text-gray-400">Hamz give me some info on this.</p>
+        <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+            <!-- ITEM 1 -->
+            <div class="gallery-item sports" data-category="sports">
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+                    <img src="cards/card1.png" alt="Sports Card" class="w-full h-auto object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
+                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
                     </div>
                 </div>
             </div>
 
-            <div id="content-gallery" class="tab-content pt-6 hidden" role="tabpanel" aria-labelledby="tab-gallery">
-                <h2 class="text-3xl font-bold text-red-400 mb-6">The Current Collection</h2>
-                
-                <nav class="mb-8 border-b border-gray-800 pb-4">
-                    <div class="flex flex-wrap justify-center sm:justify-start gap-3">
-                        <button
-                            class="category-button active px-4 py-2 text-sm rounded-full transition duration-150 bg-gray-700/50 hover:bg-red-700 text-gray-200"
-                            data-category="all"
-                            onclick="filterGallery('all', this)"
-                        >
-                            All Artifacts
-                        </button>
-                        <button
-                            class="category-button px-4 py-2 text-sm rounded-full transition duration-150 bg-gray-700/50 hover:bg-red-700 text-gray-200"
-                            data-category="sports"
-                            onclick="filterGallery('sports', this)"
-                        >
-                            Sports Cards
-                        </button>
-                        <button
-                            class="category-button px-4 py-2 text-sm rounded-full transition duration-150 bg-gray-700/50 hover:bg-red-700 text-gray-200"
-                            data-category="tcg"
-                            onclick="filterGallery('tcg', this)"
-                        >
-                            TCG
-                        </button>
-                        <button
-                            class="category-button px-4 py-2 text-sm rounded-full transition duration-150 bg-gray-700/50 hover:bg-red-700 text-gray-200"
-                            data-category="comics"
-                            onclick="filterGallery('comics', this)"
-                        >
-                            Comics & Marvel
-                        </button>
-                        <button
-                            class="category-button px-4 py-2 text-sm rounded-full transition duration-150 bg-gray-700/50 hover:bg-red-700 text-gray-200"
-                            data-category="art"
-                            onclick="filterGallery('art', this)"
-                        >
-                            Fine Art
-                        </button>
-                    </div>
-                </nav>
-                
-                <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    
-                    <div class="gallery-item sports" data-category="sports">
-                        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition duration-300 transform hover:scale-[1.02]">
-                            <img src="cards/card1.png"
-                                alt="Justin Herbert Graded Card Placeholder" 
-                                class="w-full h-auto object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                                <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item tcg" data-category="tcg">
-                        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition duration-300 transform hover:scale-[1.02]">
-                            <img src="cards/card2.png"
-                                alt="TCG Holo Card Placeholder" 
-                                class="w-full h-auto object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                                <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item comics marvel" data-category="comics">
-                        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition duration-300 transform hover:scale-[1.02]">
-                            <img src="images/Main.png" 
-                                alt="Graded Comic Book Placeholder" 
-                                class="w-full h-auto object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                                <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item art" data-category="art">
-                        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition duration-300 transform hover:scale-[1.02]">
-                            <img src="images/Main.png" 
-                                alt="Fine Art Print Placeholder" 
-                                class="w-full h-auto object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                                <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="gallery-item sports" data-category="sports">
-                        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition duration-300 transform hover:scale-[1.02]">
-                            <img src="images/Main.png" 
-                                alt="Luka Doncic Graded Card Placeholder" 
-                                class="w-full h-auto object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                                <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="gallery-item comics" data-category="comics">
-                        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition duration-300 transform hover:scale-[1.02]">
-                            <img src="images/Main.png" 
-                                alt="DC Comic Book Placeholder" 
-                                class="w-full h-auto object-cover">
-                            <div class="p-4">
-                                <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                                <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                            </div>
-                        </div>
+            <!-- ITEM 2 -->
+            <div class="gallery-item tcg" data-category="tcg">
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+                    <img src="cards/card2.png" alt="TCG Card" class="w-full h-auto object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
+                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
                     </div>
                 </div>
             </div>
 
-            <div id="content-analysis" class="tab-content space-y-6 pt-6 hidden" role="tabpanel" aria-labelledby="tab-analysis">
-                <h2 class="text-3xl font-bold text-red-400 mb-4">No Idea what to put here yet.</h2>
-                <div class="bg-gray-800/50 p-6 rounded-xl shadow-lg border border-red-500/30 space-y-4">
-                    <p class="text-gray-300 font-semibold text-lg">
-                        Soon...
-                    </p>
-                    <p class="text-gray-300">
-                        Soon...
-                    </p>
-                    
-                    <ul class="list-disc list-inside text-gray-300 space-y-2 ml-4">
-                        <li><strong>Some card?</strong> Soon...</li>
-                        <li><strong>Some card?</strong> Soon...</li>
-                        <li><strong>Some card?</strong> Soon...</li>
-                        <li><strong>Some card?</strong> Soon...</li>
-                    </ul>
-
-                    <p class="text-gray-300 font-semibold text-lg mt-6">
-                        Soon...
-                    </p>
-                    <ul class="list-disc list-inside text-gray-300 space-y-2 ml-4">
-                        <li><strong>Some card?</strong> Soon...</li>
-                        <li><strong>Some card?</strong> Soon...</li>
-                    </ul>
-
-                    <p class="text-gray-300 pt-4">
-                        Order Through the Contact Tab!
-                    </p>
+            <!-- ITEM 3 -->
+            <div class="gallery-item comics marvel" data-category="comics">
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+                    <img src="images/Main.png" alt="Comic Placeholder" class="w-full h-auto object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
+                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
+                    </div>
                 </div>
             </div>
 
-            <div id="content-contact" class="tab-content pt-6 hidden" role="tabpanel" aria-labelledby="tab-contact">
-                <h2 class="text-3xl font-bold text-red-400 mb-8 text-center">Connect & Shop</h2>
-                
-                <div class="max-w-md mx-auto space-y-6">
-                    
-                    <a href="https://www.instagram.com/The_Gemnasium/" target="_blank" class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition duration-300 group border border-red-500/30">
-                        <i class="fab fa-instagram text-3xl text-pink-500 group-hover:text-pink-400 transition"></i>
-                        <span class="text-xl font-semibold text-gray-100 group-hover:text-red-400">Follow Our Instagram</span>
-                    </a>
-
-                    <a href="https://www.ebay.com/" target="_blank" class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition duration-300 group border border-red-500/30">
-                        <i class="fab fa-ebay text-3xl text-blue-500 group-hover:text-blue-400 transition"></i>
-                        <span class="text-xl font-semibold text-gray-100 group-hover:text-red-400">See what's available on our Current Listings on Ebay</span>
-                    </a>
-
-                    <a href="mailto:soon@gmail.com" class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition duration-300 group border border-red-500/30">
-                        <i class="fas fa-envelope text-3xl text-red-500 group-hover:text-red-400 transition"></i>
-                        <span class="text-xl font-semibold text-gray-100 group-hover:text-red-400">Inquire Directly (Email)</span>
-                    </a>
-
+            <!-- ITEM 4 -->
+            <div class="gallery-item art" data-category="art">
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+                    <img src="images/Main.png" alt="Art Print" class="w-full h-auto object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
+                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
-    
-    <footer class="text-center py-6 mt-12 border-t border-gray-800">
-        <p class="text-gray-500 text-sm">&copy; 2025 THE GEMNASIUM. All rights reserved.</p>
-    </footer>
+    <!-- REVIEWS TAB -->
+    <div id="content-reviews" class="tab-content space-y-6 pt-6 hidden">
+        <h2 class="text-3xl font-bold text-red-400 mb-4">No Idea what to put here yet.</h2>
 
-    <script>
-        function switchTab(tabName) {
-            // Main Tab Logic (remains the same)
-            const contents = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-button');
+        <div class="bg-gray-800/50 p-6 rounded-xl shadow-lg border border-red-500/30 space-y-4">
+            <p class="text-gray-300 font-semibold text-lg">Soon...</p>
+            <p class="text-gray-300">Soon...</p>
 
-            contents.forEach(content => {
-                content.classList.add('hidden');
-                content.setAttribute('aria-hidden', 'true');
-            });
+            <ul class="list-disc list-inside text-gray-300 space-y-2 ml-4">
+                <li><strong>Some card?</strong> Soon...</li>
+                <li><strong>Some card?</strong> Soon...</li>
+            </ul>
 
-            buttons.forEach(button => {
-                button.classList.remove('active');
-                button.setAttribute('aria-selected', 'false');
-                button.classList.remove('border-b-4', 'border-red-500', 'text-red-400', 'font-semibold');
-            });
+            <p class="text-gray-300 pt-4">Order Through the Contact Tab!</p>
+        </div>
+    </div>
 
-            const activeContent = document.getElementById(`content-${tabName}`);
-            const activeButton = document.getElementById(`tab-${tabName}`);
+    <!-- CONTACT TAB -->
+    <div id="content-contact" class="tab-content pt-6 hidden">
+        <h2 class="text-3xl font-bold text-red-400 mb-8 text-center">Connect & Shop</h2>
 
-            if (activeContent) {
-                activeContent.classList.remove('hidden');
-                activeContent.setAttribute('aria-hidden', 'false');
-            }
-            if (activeButton) {
-                activeButton.classList.add('active');
-                activeButton.setAttribute('aria-selected', 'true');
-                activeButton.classList.add('border-b-4', 'border-red-500', 'text-red-400', 'font-semibold');
-            }
-        }
+        <div class="max-w-md mx-auto space-y-6">
 
-        // Gallery Filtering Function
-        function filterGallery(category, clickedButton) {
-            const items = document.querySelectorAll('.gallery-item');
-            const buttons = document.querySelectorAll('.category-button');
+            <a href="https://www.instagram.com/The_Gemnasium/" target="_blank"
+               class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition border border-red-500/30">
+                <i class="fab fa-instagram text-3xl text-pink-500"></i>
+                <span class="text-xl font-semibold text-gray-100">Follow Our Instagram</span>
+            </a>
 
-            // Deactivate all buttons
-            buttons.forEach(button => {
-                button.classList.remove('active');
-            });
+            <a href="https://www.ebay.com/str/thegemnasium" target="_blank"
+               class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition border border-red-500/30">
+                <i class="fab fa-ebay text-3xl text-blue-500"></i>
+                <span class="text-xl font-semibold text-gray-100">See our Listings on Ebay</span>
+            </a>
 
-            // Activate the clicked button
-            clickedButton.classList.add('active');
+            <a href="mailto:DailyGrind.Gemnasium@gmail.com"
+               class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition border border-red-500/30">
+                <i class="fas fa-envelope text-3xl text-red-500"></i>
+                <span class="text-xl font-semibold text-gray-100">Inquire Directly (Email)</span>
+            </a>
 
-            // Filter logic
-            items.forEach(item => {
-                const itemCategory = item.getAttribute('data-category');
-                
-                // Show all items if 'all' is selected, or if the item matches the category
-                if (category === 'all' || itemCategory === category) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-        }
+        </div>
+    </div>
 
-        // Initialize the app by handling the preloader
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Ensure the correct tab is set immediately for when the preloader disappears
-            switchTab('home');
+    <!-- FAQ TAB -->
+    <div id="content-faq" class="tab-content pt-6 hidden">
 
-            // 2. Handle the preloader fade-out after 1.5 seconds
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-            }, 1500); 
+        <h2 class="text-4xl font-bold text-red-400 mb-6 text-center flex items-center justify-center gap-3">
+    <img src="images/logo.png" class="w-10 h-10 drop-shadow-[0_0_12px_#ff0000] faq-logo-glow">
+    Frequently Asked Questions
+    <img src="images/logo.png" class="w-10 h-10 drop-shadow-[0_0_12px_#ff0000] faq-logo-glow">
+</h2>
+
+        <div class="max-w-3xl mx-auto space-y-4">
+
+            <!-- FAQ ITEM -->
+            <div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
+                        <h3 class="text-lg font-semibold text-red-400">How do I purchase an item?</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-300 transition"></i>
+                </div>
+
+                <div class="faq-answer text-gray-300 mt-3">
+                    You can purchase through our <strong>eBay store</strong>, Instagram DMs, or the email listed in the Contact tab.
+                </div>
+
+                <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
+            </div>
+
+            <!-- FAQ ITEM -->
+            <div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
+                        <h3 class="text-lg font-semibold text-red-400">Do you accept returns?</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-300 transition"></i>
+                </div>
+
+                <div class="faq-answer text-gray-300 mt-3">
+                    Returns depend on the platform.  
+                    eBay follows standard buyer protection, while direct purchases may vary.
+                </div>
+
+                <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
+            </div>
+
+            <!-- FAQ ITEM -->
+            <div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
+                        <h3 class="text-lg font-semibold text-red-400">Do you ship internationally?</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-300 transition"></i>
+                </div>
+
+                <div class="faq-answer text-gray-300 mt-3">
+                    Not as of Yet. We currently ship only in the United States
+                </div>
+
+                <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
+            </div>
+
+            <!-- FAQ ITEM -->
+            <div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
+                        <h3 class="text-lg font-semibold text-red-400">When will my Heirloom be shipped?</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-gray-300 transition"></i>
+                </div>
+
+                <div class="faq-answer text-gray-300 mt-3">
+                    We usually ship same or next day!
+                </div>
+                <div class="faq-answer text-gray-300 mt-3">
+                    All purchased items include tracking and are always properly packaged!
+                </div>
+                <div class="faq-answer text-gray-300 mt-3">
+                    Combined shipping is available!
+                </div>
+
+                <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
+            </div>
+
+<!-- FAQ ITEM — RETURNS -->
+<div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
+            <h3 class="text-lg font-semibold text-red-400">What is your return policy?</h3>
+        </div>
+        <i class="fas fa-chevron-down text-gray-300 transition"></i>
+    </div>
+
+    <div class="faq-answer text-gray-300 mt-3">
+        All sales are final and no returns are accepted!
+    </div>
+
+    <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
+</div>
+
+<!-- FAQ ITEM — WARRANTY -->
+<div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
+            <h3 class="text-lg font-semibold text-red-400">Is there a warranty on items?</h3>
+        </div>
+        <i class="fas fa-chevron-down text-gray-300 transition"></i>
+    </div>
+
+    <div class="faq-answer text-gray-300 mt-3">
+        Any damaged items during shipping are always covered so long as proper documentation and proof is provided!
+    </div>
+
+    <div class="faq-answer text-gray-300 mt-3">
+        If there is ever an issue, contact us — we always work to make it right.
+    </div>
+
+    <div class="faq-answer text-gray-300 mt-3">
+        Communication is key!
+    </div>
+
+    <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
+</div>
+
+        </div>
+    </div>
+
+</div> <!-- end tab content -->
+</div> <!-- end wrapper -->
+
+<footer class="text-center py-6 mt-12 border-t border-gray-800">
+    <p class="text-gray-500 text-sm">&copy; 2025 THE GEMNASIUM. All rights reserved.</p>
+</footer>
+
+<script>
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+        document.getElementById(`content-${tabName}`).classList.remove('hidden');
+    }
+
+    function filterGallery(category, clickedButton) {
+        const items = document.querySelectorAll('.gallery-item');
+        const buttons = document.querySelectorAll('.category-button');
+
+        buttons.forEach(b => b.classList.remove('active'));
+        clickedButton.classList.add('active');
+
+        items.forEach(item => {
+            item.classList.toggle('hidden', category !== 'all' && item.dataset.category !== category);
         });
-    </script>
-</body>
+    }
 
+/* FAQ DROPDOWN & Rainbow letters */
+document.addEventListener("DOMContentLoaded", () => {
+    // FAQ dropdown
+    document.querySelectorAll(".faq-item").forEach(item => {
+        item.addEventListener("click", () => {
+            item.classList.toggle("open");
+            item.querySelector("i").classList.toggle("rotate-180");
+        });
+    });
+
+// Rainbow letters for THE GEMNASIUM
+const logo = document.getElementById("logo-text");
+const text = logo.textContent.trim();
+logo.textContent = ''; // clear text
+
+text.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.style.display = 'inline-block';
+    span.style.marginRight = i === text.length - 1 ? '0' : '0.15em';  // no extra margin on last letter
+    span.style.animation = `rgbGlow 6s infinite linear ${i * 0.1}s`;
+    logo.appendChild(span);
+});
+
+    // Default tab
+    switchTab('home');
+
+    // Preloader
+    setTimeout(() => document.getElementById('preloader').classList.add('fade-out'), 1500);
+});
+
+/* Falling diamonds */
+function createDiamond() {
+    const container = document.getElementById("diamond-container");
+    
+    if (container.children.length >= 20) return; // max 20 diamonds at a time
+    
+    const diamond = document.createElement("div");
+    diamond.classList.add("diamond");
+
+    diamond.style.left = Math.random() * 100 + "vw";
+    const duration = 4 + Math.random() * 6;
+    diamond.style.animationDuration = duration + "s";
+    diamond.style.opacity = (0.3 + Math.random() * 0.4).toString();
+
+    const hue = Math.floor(Math.random() * 360);
+    diamond.style.filter = `hue-rotate(${hue}deg)`;
+
+    container.appendChild(diamond);
+    diamond.addEventListener("animationend", () => diamond.remove());
+}
+
+setInterval(createDiamond, 400);
+
+
+</script>
+
+</body>
 </html>
