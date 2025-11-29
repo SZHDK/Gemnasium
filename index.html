@@ -23,6 +23,15 @@
             @apply border-b-4 border-red-500 text-red-400 font-semibold;
         }
 
+.tab-button {
+    @apply text-gray-300 font-semibold bg-gray-800/60;
+}
+
+.tab-button.active {
+    @apply bg-red-600 text-white border-red-500 shadow-lg shadow-red-500/50;
+}
+
+
         .category-button.active {
             @apply bg-red-600 text-white shadow-lg shadow-red-500/50;
         }
@@ -252,19 +261,21 @@
 </header>
 
 <nav class="mt-8 mb-6 border-b border-gray-800">
-    <div class="flex flex-wrap justify-center sm:justify-start -mb-px space-x-2 sm:space-x-8" role="tablist">
+    <div class="flex flex-wrap justify-center sm:justify-start -mb-px space-x-2 sm:space-x-4" role="tablist">
 
-        <button id="tab-home" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('home')">Home</button>
-        <button id="tab-showroom" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('showroom')">The Showroom</button>
-        <button id="tab-reviews" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('reviews')">Reviews</button>
-        <button id="tab-contact" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('contact')">Contact</button>
+        <button id="tab-home" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('home')">Home</button>
 
-        <!-- NEW FAQ TAB BUTTON -->
-        <button id="tab-faq" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('faq')">
-            FAQ
-        </button>
+        <button id="tab-showroom" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('showroom')">The Showroom</button>
+
+        <button id="tab-reviews" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('reviews')">Reviews</button>
+
+        <button id="tab-contact" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('contact')">Contact</button>
+
+        <button id="tab-faq" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('faq')">FAQ</button>
+
     </div>
 </nav>
+
 
 <div id="tab-content">
 
@@ -417,22 +428,74 @@
 
         </div>
     </div>
-    <!-- REVIEWS TAB -->
-    <div id="content-reviews" class="tab-content space-y-6 pt-6 hidden">
-        <h2 class="text-3xl font-bold text-red-400 mb-4">No Idea what to put here yet.</h2>
+<!-- REVIEWS TAB CONTENT -->
+<div id="content-reviews" class="tab-content space-y-6 pt-6 hidden">
 
-        <div class="bg-gray-800/50 p-6 rounded-xl shadow-lg border border-red-500/30 space-y-4">
-            <p class="text-gray-300 font-semibold text-lg">Soon...</p>
-            <p class="text-gray-300">Soon...</p>
+  <h2 class="text-3xl font-bold text-red-400 mb-4 text-center">Customer Reviews</h2>
 
-            <ul class="list-disc list-inside text-gray-300 space-y-2 ml-4">
-                <li><strong>Some card?</strong> Soon...</li>
-                <li><strong>Some card?</strong> Soon...</li>
-            </ul>
-
-            <p class="text-gray-300 pt-4">Order Through the Contact Tab!</p>
-        </div>
+  <!-- Left-to-Right Scrolling -->
+  <div class="overflow-hidden whitespace-nowrap relative border-t border-b border-gray-800 py-4">
+    <div class="inline-block animate-scroll-left space-x-8">
+      <div class="inline-block review-box">
+        "Thank you! great service!!" – a***d
+      </div>
     </div>
+  </div>
+
+  <!-- Right-to-Left Scrolling -->
+  <div class="overflow-hidden whitespace-nowrap relative border-t border-b border-gray-800 py-4">
+    <div class="inline-block animate-scroll-right space-x-8">
+      <div class="inline-block review-box">
+        "securely packed. as described. fast & smooth transaction. thanks!!!!!" – m***1
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+/* Review box styling with glowing red edges */
+.review-box {
+  background-color: rgba(31, 8, 61, 0.6);
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  border: 2px solid #ff1a1a;
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff4d4d;
+  color: #f0f0f0;
+  display: inline-block;
+  min-width: 250px;
+  font-weight: 500;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ff1a1a, 0 0 25px #ff4d4d;
+}
+
+/* Scrolling animations */
+@keyframes scrollLeft {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+@keyframes scrollRight {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-scroll-left {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scrollLeft 40s linear infinite; /* slower */
+}
+
+.animate-scroll-right {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scrollRight 45s linear infinite; /* slower */
+}
+</style>
 
     <!-- CONTACT TAB -->
     <div id="content-contact" class="tab-content pt-6 hidden">
