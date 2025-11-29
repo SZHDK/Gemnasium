@@ -32,6 +32,28 @@
             animation: redGlow 2s infinite ease-in-out;
         }
 
+@keyframes fallSpinCW {
+    0% {
+        transform: translateY(-60px) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fallSpinCCW {
+    0% {
+        transform: translateY(-60px) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(110vh) rotate(-360deg);
+        opacity: 0;
+    }
+}
+
         @keyframes redGlow {
             0%, 100% {
                 text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff1a1a, 0 0 15px #ff0000, 0 0 20px #ff3333;
@@ -214,7 +236,6 @@
     height: 35px;
     background: url('images/logo.png') no-repeat center/contain;
     opacity: 0.5;
-    animation: fallSpin linear infinite;
 }
 
 @keyframes fallSpin {
@@ -736,6 +757,10 @@ function createDiamond() {
 
     const hue = Math.floor(Math.random() * 360);
     diamond.style.filter = `hue-rotate(${hue}deg)`;
+
+    // Randomly decide spin direction
+    const spinDirection = Math.random() < 0.5 ? 360 : -360;
+    diamond.style.animationName = `fallSpin${spinDirection > 0 ? 'CW' : 'CCW'}`;
 
     container.appendChild(diamond);
     diamond.addEventListener("animationend", () => diamond.remove());
