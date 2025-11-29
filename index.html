@@ -87,6 +87,43 @@
             opacity: 1;
         }
 
+#price-min-label, #price-max-label {
+    transition: all 0.2s ease;
+}
+
+/* Price slider custom red */
+#price-min,
+#price-max {
+    -webkit-appearance: none; /* remove default styling */
+    width: 8rem; /* matches w-32 */
+    height: 6px;
+    background: #660000; /* dark red track */
+    border-radius: 9999px;
+    outline: none;
+}
+
+#price-min::-webkit-slider-thumb,
+#price-max::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #ff1a1a; /* bright red thumb */
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff; /* optional white border */
+    transition: background 0.2s ease;
+}
+
+#price-min::-moz-range-thumb,
+#price-max::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #ff1a1a;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff;
+}
+
         #preloader .diamond-logo { animation: shine 1.5s infinite ease-in-out; }
         .fade-out { animation: fadeOut 0.8s forwards; }
 
@@ -293,7 +330,8 @@
         <nav class="mb-8 border-b border-gray-800 pb-4">
             <div class="flex flex-wrap justify-center sm:justify-start gap-3">
                 <button class="category-button active px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
-                        onclick="filterGallery('all', this)">All Artifacts</button>
+        data-category="all"
+        onclick="filterGallery('all', this)">All Artifacts</button>
 
                 <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
                         onclick="filterGallery('sports', this)">Sports Cards</button>
@@ -309,51 +347,73 @@
             </div>
         </nav>
 
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+<!-- Price Slider -->
+<div class="flex items-center gap-2">
+    <label class="text-gray-300 font-semibold">Price:</label>
+    <input type="range" id="price-min" min="0" max="1000" value="0" step="10" class="w-32">
+    <span class="text-gray-400" id="price-min-label">$0</span>
+    <span class="text-gray-300">-</span>
+    <input type="range" id="price-max" min="0" max="1000" value="1000" step="10" class="w-32">
+    <span class="text-gray-400" id="price-max-label">$1000</span>
+</div>
+
+    <!-- Sort Dropdown -->
+    <div>
+        <select id="sort-options" class="bg-gray-800 text-gray-300 rounded px-3 py-1 border border-red-500">
+            <option value="az">A-Z</option>
+            <option value="za">Z-A</option>
+            <option value="low-high">Price: Low → High</option>
+            <option value="high-low">Price: High → Low</option>
+        </select>
+    </div>
+</div>
+
         <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
-            <!-- ITEM 1 -->
-            <div class="gallery-item sports" data-category="sports">
-                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-                    <img src="cards/card1.png" alt="Sports Card" class="w-full h-auto object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                    </div>
-                </div>
-            </div>
+           <!-- ITEM 1 -->
+<div class="gallery-item sports" data-category="sports" data-price="200">
+    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+        <img src="cards/card1.png" alt="Sports Card" class="w-full h-auto object-cover">
+        <div class="p-4">
+            <h3 class="font-bold text-lg text-red-300">BIG TICKET</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $200</p>
+        </div>
+    </div>
+</div>
 
-            <!-- ITEM 2 -->
-            <div class="gallery-item tcg" data-category="tcg">
-                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-                    <img src="cards/card2.png" alt="TCG Card" class="w-full h-auto object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                    </div>
-                </div>
-            </div>
+<!-- ITEM 2 -->
+<div class="gallery-item tcg" data-category="tcg" data-price="500">
+    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+        <img src="cards/card2.png" alt="TCG Card" class="w-full h-auto object-cover">
+        <div class="p-4">
+            <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $500</p>
+        </div>
+    </div>
+</div>
 
-            <!-- ITEM 3 -->
-            <div class="gallery-item comics marvel" data-category="comics">
-                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-                    <img src="images/Main.png" alt="Comic Placeholder" class="w-full h-auto object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                    </div>
-                </div>
-            </div>
+<!-- ITEM 3 -->
+<div class="gallery-item art" data-category="art" data-price="800">
+    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+        <img src="images/Main.png" alt="Comic Placeholder" class="w-full h-auto object-cover">
+        <div class="p-4">
+            <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $800</p>
+        </div>
+    </div>
+</div>
 
-            <!-- ITEM 4 -->
-            <div class="gallery-item art" data-category="art">
-                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-                    <img src="images/Main.png" alt="Art Print" class="w-full h-auto object-cover">
-                    <div class="p-4">
-                        <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-                        <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $???</p>
-                    </div>
-                </div>
-            </div>
+<!-- ITEM 4 -->
+<div class="gallery-item art" data-category="art" data-price="300">
+    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+        <img src="images/Main.png" alt="Art Print" class="w-full h-auto object-cover">
+        <div class="p-4">
+            <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $300</p>
+        </div>
+    </div>
+</div>
 
         </div>
     </div>
@@ -540,27 +600,45 @@
 </footer>
 
 <script>
-    function switchTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+function switchTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+    // Remove active class from all tab buttons
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
 
-        document.getElementById(`tab-${tabName}`).classList.add('active');
-        document.getElementById(`content-${tabName}`).classList.remove('hidden');
+    // Show the selected tab
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+    document.getElementById(`content-${tabName}`).classList.remove('hidden');
+
+    // If switching to gallery, re-filter items based on current price sliders
+    if(tabName === 'gallery') {
+        const activeBtn = document.querySelector('#content-gallery .category-button.active') || 
+                          document.querySelector('#content-gallery .category-button');
+        filterGallery(activeBtn.dataset.category, activeBtn);
     }
+}
 
-    function filterGallery(category, clickedButton) {
-        const items = document.querySelectorAll('.gallery-item');
-        const buttons = document.querySelectorAll('.category-button');
+function filterGallery(category, clickedButton) {
+    const items = document.querySelectorAll('.gallery-item');
+    const buttons = document.querySelectorAll('.category-button');
 
-        buttons.forEach(b => b.classList.remove('active'));
-        clickedButton.classList.add('active');
+    buttons.forEach(b => b.classList.remove('active'));
+    clickedButton.classList.add('active');
 
-        items.forEach(item => {
-            item.classList.toggle('hidden', category !== 'all' && item.dataset.category !== category);
-        });
-    }
+    const minPrice = Number(document.getElementById('price-min').value);
+    const maxPrice = Number(document.getElementById('price-max').value);
 
-/* FAQ DROPDOWN & Rainbow letters */
+    items.forEach(item => {
+        const itemCategories = item.dataset.category.split(' ');
+        const itemPrice = Number(item.dataset.price);
+
+        const matchesCategory = category === 'all' || itemCategories.includes(category);
+        const matchesPrice = itemPrice >= minPrice && itemPrice <= maxPrice;
+
+        item.classList.toggle('hidden', !(matchesCategory && matchesPrice));
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // FAQ dropdown
     document.querySelectorAll(".faq-item").forEach(item => {
@@ -570,25 +648,76 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-// Rainbow letters for THE GEMNASIUM
-const logo = document.getElementById("logo-text");
-const text = logo.textContent.trim();
-logo.textContent = ''; // clear text
+    // Rainbow letters
+    const logo = document.getElementById("logo-text");
+    const text = logo.textContent.trim();
+    logo.textContent = '';
+    text.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.style.display = 'inline-block';
+        span.style.marginRight = i === text.length - 1 ? '0' : '0.15em';
+        span.style.animation = `rgbGlow 6s infinite linear ${i * 0.1}s`;
+        logo.appendChild(span);
+    });
 
-text.split('').forEach((char, i) => {
-    const span = document.createElement('span');
-    span.textContent = char;
-    span.style.display = 'inline-block';
-    span.style.marginRight = i === text.length - 1 ? '0' : '0.15em';  // no extra margin on last letter
-    span.style.animation = `rgbGlow 6s infinite linear ${i * 0.1}s`;
-    logo.appendChild(span);
+// Sorting gallery items
+document.getElementById('sort-options').addEventListener('change', () => {
+    const gallery = document.getElementById('gallery-grid');
+    const items = Array.from(gallery.querySelectorAll('.gallery-item'));
+    const sortValue = document.getElementById('sort-options').value;
+
+    items.sort((a, b) => {
+        if (sortValue === 'az') {
+            return a.querySelector('h3').textContent.localeCompare(b.querySelector('h3').textContent);
+        } else if (sortValue === 'za') {
+            return b.querySelector('h3').textContent.localeCompare(a.querySelector('h3').textContent);
+        } else if (sortValue === 'low-high') {
+            return Number(a.dataset.price) - Number(b.dataset.price);
+        } else if (sortValue === 'high-low') {
+            return Number(b.dataset.price) - Number(a.dataset.price);
+        }
+        return 0;
+    });
+
+    // Re-append in sorted order
+    items.forEach(item => gallery.appendChild(item));
 });
+
 
     // Default tab
     switchTab('home');
 
     // Preloader
     setTimeout(() => document.getElementById('preloader').classList.add('fade-out'), 1500);
+
+    // Price sliders
+function getActiveCategoryButton() {
+    return document.querySelector('#content-gallery .category-button.active') || 
+           document.querySelector('#content-gallery .category-button');
+}
+
+document.getElementById('price-min').addEventListener('input', () => {
+    const min = document.getElementById('price-min').value;
+    document.getElementById('price-min-label').textContent = `$${min}`;
+    const activeBtn = getActiveCategoryButton();
+    filterGallery(activeBtn.dataset.category, activeBtn);
+});
+
+document.getElementById('price-max').addEventListener('input', () => {
+    const max = document.getElementById('price-max').value;
+    document.getElementById('price-max-label').textContent = `$${max}`;
+    const activeBtn = getActiveCategoryButton();
+    filterGallery(activeBtn.dataset.category, activeBtn);
+});
+
+    document.getElementById('price-max').addEventListener('input', () => {
+        document.getElementById('price-max-label').textContent = `$${document.getElementById('price-max').value}`;
+        filterGallery(
+            document.querySelector('.category-button.active').dataset.category,
+            document.querySelector('.category-button.active')
+        );
+    });
 });
 
 /* Falling diamonds */
