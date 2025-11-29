@@ -162,27 +162,6 @@
             opacity: 1;
         }
 
-
-    @keyframes shine {
-        0%, 100% {
-            transform: scale(1);
-            opacity: 0.8;
-            filter: drop-shadow(0 0 5px rgba(248, 113, 113, 0.7));
-        }
-        50% {
-            transform: scale(1.1);
-            opacity: 1;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.9));
-        }
-    }
-
-    @keyframes fadeOut {
-        to {
-            opacity: 0;
-            visibility: hidden;
-        }
-    }
-
     #preloader {
         position: fixed;
         top: 0;
@@ -276,7 +255,7 @@
     <div class="flex flex-wrap justify-center sm:justify-start -mb-px space-x-2 sm:space-x-8" role="tablist">
 
         <button id="tab-home" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('home')">Home</button>
-        <button id="tab-gallery" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('gallery')">Gallery</button>
+        <button id="tab-showroom" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('showroom')">The Showroom</button>
         <button id="tab-reviews" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('reviews')">Reviews</button>
         <button id="tab-contact" class="tab-button px-4 py-3 hover:text-red-400" onclick="switchTab('contact')">Contact</button>
 
@@ -345,7 +324,7 @@
     </div>
 
     <!-- GALLERY TAB -->
-    <div id="content-gallery" class="tab-content pt-6 hidden">
+    <div id="content-showroom" class="tab-content pt-6 hidden">
         <h2 class="text-3xl font-bold text-red-400 mb-6">The Current Collection</h2>
 
         <nav class="mb-8 border-b border-gray-800 pb-4">
@@ -632,11 +611,11 @@ function switchTab(tabName) {
     document.getElementById(`content-${tabName}`).classList.remove('hidden');
 
     // If switching to gallery, re-filter items based on current price sliders
-    if(tabName === 'gallery') {
-        const activeBtn = document.querySelector('#content-gallery .category-button.active') || 
-                          document.querySelector('#content-gallery .category-button');
-        filterGallery(activeBtn.dataset.category, activeBtn);
-    }
+if(tabName === 'showroom') {
+    const activeBtn = document.querySelector('#content-showroom .category-button.active') || 
+                      document.querySelector('#content-showroom .category-button');
+    filterGallery(activeBtn.dataset.category, activeBtn);
+  }
 }
 
 function filterGallery(category, clickedButton) {
@@ -714,22 +693,31 @@ document.getElementById('sort-options').addEventListener('change', () => {
 
     // Price sliders
 function getActiveCategoryButton() {
-    return document.querySelector('#content-gallery .category-button.active') || 
-           document.querySelector('#content-gallery .category-button');
+    return document.querySelector('#content-showroom .category-button.active') || 
+           document.querySelector('#content-showroom .category-button');
 }
 
-document.getElementById('price-min').addEventListener('input', () => {
-    const min = document.getElementById('price-min').value;
-    document.getElementById('price-min-label').textContent = `$${min}`;
+// Cache elements
+const priceMin = document.getElementById('price-min');
+const priceMax = document.getElementById('price-max');
+const priceMinLabel = document.getElementById('price-min-label');
+const priceMaxLabel = document.getElementById('price-max-label');
+
+function updateGallery() {
     const activeBtn = getActiveCategoryButton();
     filterGallery(activeBtn.dataset.category, activeBtn);
+}
+
+// Min slider
+priceMin.addEventListener('input', () => {
+    priceMinLabel.textContent = `$${priceMin.value}`;
+    updateGallery();
 });
 
-document.getElementById('price-max').addEventListener('input', () => {
-    const max = document.getElementById('price-max').value;
-    document.getElementById('price-max-label').textContent = `$${max}`;
-    const activeBtn = getActiveCategoryButton();
-    filterGallery(activeBtn.dataset.category, activeBtn);
+// Max slider
+priceMax.addEventListener('input', () => {
+    priceMaxLabel.textContent = `$${priceMax.value}`;
+    updateGallery();
 });
 
     document.getElementById('price-max').addEventListener('input', () => {
@@ -773,3 +761,4 @@ setInterval(createDiamond, 400);
 
 </body>
 </html>
+
