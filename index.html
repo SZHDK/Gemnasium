@@ -63,6 +63,18 @@
     }
 }
 
+@keyframes rgbGlowPrice {
+    0%   { color: rgb(255, 77, 77); }
+    25%  { color: rgb(255, 200, 77); }
+    50%  { color: rgb(77, 255, 77); }
+    75%  { color: rgb(77, 77, 255); }
+    100% { color: rgb(255, 77, 77); }
+}
+
+.rgb-price {
+    animation: rgbGlowPrice 3s infinite linear;
+}
+
         @keyframes redGlow {
             0%, 100% {
                 text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff1a1a, 0 0 15px #ff0000, 0 0 20px #ff3333;
@@ -383,12 +395,12 @@
         <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
            <!-- ITEM 1 -->
-<div class="gallery-item sports" data-category="sports" data-price="200">
+<div class="gallery-item sports" data-category="sports" data-price="300">
     <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
         <img src="cards/card1.png" alt="Sports Card" class="w-full h-auto object-cover">
         <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">BIG TICKET</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $200</p>
+            <h3 class="font-bold text-lg text-red-300">ILIA TOPURIA BIG TICKET</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $300</p>
         </div>
     </div>
 </div>
@@ -396,32 +408,54 @@
 <!-- ITEM 2 -->
 <div class="gallery-item tcg" data-category="tcg" data-price="500">
     <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/card2.png" alt="TCG Card" class="w-full h-auto object-cover">
+        <img src="cards/Amazing_Blast.jpg" alt="Amazing Blastoise" class="w-full h-auto object-cover">
         <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $25</p>
+            <h3 class="font-bold text-lg text-red-300">Amazing Blastoise</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $25</p>
         </div>
     </div>
 </div>
 
 <!-- ITEM 3 -->
-<div class="gallery-item art" data-category="comics" data-price="800">
+<div class="gallery-item art" data-category="comics" data-price="25">
     <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="images/Elektra.jpg" alt="Comics" class="w-full h-auto object-cover">
+        <img src="cards/Elektra.jpg" alt="Elektra" class="w-full h-auto object-cover">
         <div class="p-4">
             <h3 class="font-bold text-lg text-red-300">Elektra</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $50</p>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $25</p>
         </div>
     </div>
 </div>
 
 <!-- ITEM 4 -->
-<div class="gallery-item art" data-category="art" data-price="300">
+<div class="gallery-item art" data-category="comics" data-price="300">
     <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="images/Main.png" alt="Art Print" class="w-full h-auto object-cover">
+        <img src="cards/Drax_Thanos_Battle.jpg" alt="Art Print" class="w-full h-auto object-cover">
         <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">Card name will go here</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At: $300</p>
+            <h3 class="font-bold text-lg text-red-300">Drax Thanos Battle</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $300</p>
+        </div>
+    </div>
+</div>
+
+<!-- ITEM 5 -->
+<div class="gallery-item art" data-category="comics" data-price="150">
+    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+        <img src="cards/FinFangFoom_IronMan.jpg" alt="Art Print" class="w-full h-auto object-cover">
+        <div class="p-4">
+            <h3 class="font-bold text-lg text-red-300">FinFangFoom vs Iron Man</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $150</p>
+        </div>
+    </div>
+</div>
+
+<!-- ITEM 6 -->
+<div class="gallery-item art" data-category="art" data-price="200">
+    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
+        <img src="cards/HP_Back_Signed_KyleWillis.jpg" alt="Art Print" class="w-full h-auto object-cover">
+        <div class="p-4">
+            <h3 class="font-bold text-lg text-red-300">Signed Card</h3>
+            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $200</p>
         </div>
     </div>
 </div>
