@@ -364,6 +364,9 @@
 
                 <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
                         onclick="filterGallery('art', this)">Fine Art</button>
+
+                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
+                        onclick="filterGallery('other', this)">Other Gems</button>
             </div>
         </nav>
 
@@ -403,7 +406,7 @@
 </div>
 
 <!-- ITEM 2 -->
-<div class="gallery-item tcg" data-category="tcg" data-price="500">
+<div class="gallery-item tcg" data-category="tcg" data-price="25">
     <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
         <img src="cards/Amazing_Blast.jpg" alt="Amazing Blastoise" class="w-full h-auto object-cover">
         <div class="p-4">
@@ -447,9 +450,9 @@
 </div>
 
 <!-- ITEM 6 -->
-<div class="gallery-item art" data-category="tcg" data-price="200">
+<div class="gallery-item art" data-category="other" data-price="200">
     <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/HP_Front.jpg" alt="Art Print" class="w-full h-auto object-cover">
+        <img src="cards/HP_Front.jpg" alt="Other" class="w-full h-auto object-cover">
         <div class="p-4">
             <h3 class="font-bold text-lg text-red-300">The High Priestess</h3>
             <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $200</p>
@@ -837,7 +840,3 @@ setInterval(createDiamond, 400);
 
 </body>
 </html>
-
-
-
-
