@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — The Gemnasium</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/components.css">
+  
+  <style>
+    .account-page {
+      padding-top: var(--nav-height);
+      min-height: calc(100vh - var(--nav-height));
+    }
+    .account-header {
+      padding: var(--space-8) 0;
+      border-bottom: var(--border-subtle);
+      background: linear-gradient(180deg, rgba(127, 29, 29, 0.05) 0%, var(--gm-void) 100%);
+    }
+    .account-content {
+      padding: var(--space-8) 0;
+    }
+    .order-card {
+      background: var(--gm-void-light);
+      border: var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: var(--border-subtle);
+      padding-bottom: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .order-id {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--gm-white);
+    }
+    .order-date {
+      color: var(--gm-slate-400);
+      font-size: var(--text-sm);
+    }
+    .order-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-pending { background: rgba(234, 179, 8, 0.1); color: #facc15; }
+    .status-shipped { background: rgba(16, 185, 129, 0.1); color: #34d399; }
+    
+    .tracking-info {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      background: rgba(127, 29, 29, 0.05);
+      border: 1px dashed var(--gm-red-alpha);
+      border-radius: var(--radius-md);
+    }
+    .tracking-info strong {
+      color: var(--gm-red);
+    }
+    
+    .order-items {
+      margin-top: var(--space-4);
+    }
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    .order-total {
+      margin-top: var(--space-4);
+      text-align: right;
+      font-size: var(--text-lg);
+      font-weight: 600;
+    }
+    
+    /* Loading State */
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      padding: var(--space-12);
+    }
+  </style>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="js/bundle-account-v4.js" defer></script>
+</head>
+<body>
+
+  <!-- Rendered by components.js -->
+  <div id="navbar-root"></div>
+
+  <main class="account-page">
+    <header class="account-header">
+      <div class="container">
+        <h1 class="text-3xl font-bold" id="account-title">My Account</h1>
+        <p style="color: var(--gm-slate-400); margin-top: var(--space-2);" id="account-email">Loading...</p>
+      </div>
+    </header>
+    
+    <div class="container account-content">
+      <div class="account-tabs" style="display:flex; gap:var(--space-4); margin-bottom:var(--space-6); border-bottom:1px solid var(--border-subtle); padding-bottom:var(--space-2);">
+        <button class="btn btn-ghost active" onclick="switchAccountTab('orders')" id="tab-orders" style="border-radius: var(--radius-sm); padding: var(--space-2) var(--space-4);">Order History</button>
+        <button class="btn btn-ghost" onclick="switchAccountTab('settings')" id="tab-settings" style="border-radius: var(--radius-sm); padding: var(--space-2) var(--space-4);">Account Settings</button>
+      </div>
+      
+      <div id="view-orders" style="display: block;">
+        <div id="orders-container">
+          <div class="loading-spinner">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+          </div>
+        </div>
+      </div>
+      
+      <div id="view-settings" style="display: none;">
+        <div class="order-card" style="max-width: 600px;">
+          <h3 style="font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-4);">Security & Preferences</h3>
+          
+          <div class="form-group" style="margin-bottom: var(--space-4);">
+            <label style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+              <span>Email Notifications for Orders</span>
+              <input type="checkbox" checked style="accent-color: var(--gm-red); width: 18px; height: 18px;">
+            </label>
+          </div>
+          
+          <div class="form-group" style="margin-bottom: var(--space-4);">
+            <label style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
+              <span>Two-Factor Authentication (2FA)</span>
+              <input type="checkbox" style="accent-color: var(--gm-red); width: 18px; height: 18px;" disabled title="Setup required via Supabase">
+            </label>
+          </div>
+
+          <div style="margin-top: var(--space-6); padding-top: var(--space-4); border-top: var(--border-subtle);">
+            <h4 style="margin-bottom: var(--space-3); color: var(--gm-slate-300);">Change Password</h4>
+            <div style="display: flex; gap: var(--space-2);">
+              <input type="password" class="form-input" placeholder="New Password" style="flex:1;">
+              <button class="btn btn-secondary">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        function switchAccountTab(tab) {
+          document.getElementById('tab-orders').classList.remove('active');
+          document.getElementById('tab-settings').classList.remove('active');
+          document.getElementById('tab-' + tab).classList.add('active');
+          
+          document.getElementById('view-orders').style.display = tab === 'orders' ? 'block' : 'none';
+          document.getElementById('view-settings').style.display = tab === 'settings' ? 'block' : 'none';
+          
+          if(tab === 'settings') {
+            document.getElementById('tab-settings').style.background = 'rgba(255,255,255,0.1)';
+            document.getElementById('tab-orders').style.background = 'transparent';
+          } else {
+            document.getElementById('tab-orders').style.background = 'rgba(255,255,255,0.1)';
+            document.getElementById('tab-settings').style.background = 'transparent';
+          }
+        }
+        // Initialize active state
+        document.getElementById('tab-orders').style.background = 'rgba(255,255,255,0.1)';
+      </script>
+    </div>
+  </main>
+
+  <div id="footer-root"></div>
+
+</body>
+</html>

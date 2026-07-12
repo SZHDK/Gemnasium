@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eBay Migration Tool</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #0f172a; color: #fff; }
+    button { padding: 1rem 2rem; font-size: 1.2rem; cursor: pointer; background: #3b82f6; color: #fff; border: none; border-radius: 8px; }
+    button:disabled { background: #64748b; cursor: not-allowed; }
+    #log { margin-top: 2rem; background: #1e293b; padding: 1rem; border-radius: 8px; height: 400px; overflow-y: auto; font-family: monospace; }
+    .success { color: #10b981; }
+    .error { color: #ef4444; }
+    .info { color: #60a5fa; }
+  </style>
+  <script src="js/supabase-js.js"></script>
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <h1>eBay Store to Supabase Migration</h1>
+  <p>This tool will fetch all items from your eBay store and insert them into your live Supabase database.</p>
+  
+  <button id="startBtn">Start Migration</button>
+
+  <div id="log"></div>
+
+  <script>
+    const logEl = document.getElementById('log');
+    const startBtn = document.getElementById('startBtn');
+
+    function log(msg, type = 'info') {
+      const p = document.createElement('div');
+      p.className = type;
+      p.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      logEl.appendChild(p);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    async function fetchPage(pageNum) {
+      log(`Fetching eBay page ${pageNum}...`, 'info');
+      // Using allorigins to bypass CORS
+      const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.ebay.com/str/thegemnasium?_pgn=' + pageNum)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Failed to fetch from proxy');
+      const data = await res.json();
+      return data.contents;
+    }
+
+    function parseItems(html) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const items = [];
+
+      // Look for standard eBay store item cards
+      const cards = doc.querySelectorAll('.s-item__wrapper, .str-item-card');
+      
+      cards.forEach(card => {
+        let titleEl = card.querySelector('.s-item__title, .str-item-card__title');
+        let priceEl = card.querySelector('.s-item__price, .str-item-card__price');
+        let imgEl = card.querySelector('img.s-item__image-img, img.str-item-card__image');
+        
+        const title = titleEl ? titleEl.innerText.trim() : null;
+        const priceStr = priceEl ? priceEl.innerText.trim() : null;
+        let imageUrl = imgEl ? (imgEl.src || imgEl.dataset.src) : null;
+        
+        if (!title || title.includes("Shop on eBay")) return;
+        
+        let price = 0;
+        if (priceStr) {
+          const match = priceStr.match(/[\d,]+\.\d{2}/);
+          if (match) price = parseFloat(match[0].replace(/,/g, ''));
+        }
+
+        if (imageUrl) {
+           imageUrl = imageUrl.replace('s-l140', 's-l500').replace('s-l225', 's-l500'); 
+        }
+
+        items.push({
+          title: title,
+          price: price,
+          image_url: imageUrl || 'https://via.placeholder.com/300x400?text=No+Image',
+          category: 'Ungraded', // Default category
+          condition: 'Used',
+          stock_qty: 1
+        });
+      });
+
+      return items;
+    }
+
+    async function startMigration() {
+      startBtn.disabled = true;
+      log('Starting migration...', 'info');
+      
+      let allItems = [];
+      const totalPages = 5;
+
+      try {
+        for (let i = 1; i <= totalPages; i++) {
+          const html = await fetchPage(i);
+          const items = parseItems(html);
+          if (items.length === 0 && i > 1) {
+             log(`No items found on page ${i}. Assuming end of store.`, 'info');
+             break;
+          }
+          log(`Parsed ${items.length} items from page ${i}.`, 'success');
+          allItems = allItems.concat(items);
+        }
+
+        log(`Total items parsed: ${allItems.length}. Beginning Supabase upload...`, 'info');
+
+        if (allItems.length === 0) {
+           log('No items to insert.', 'error');
+           return;
+        }
+
+        // Insert into Supabase in batches of 50
+        const batchSize = 50;
+        for (let i = 0; i < allItems.length; i += batchSize) {
+          const batch = allItems.slice(i, i + batchSize);
+          log(`Inserting batch ${i/batchSize + 1}...`, 'info');
+          const { error } = await window.supabase.from('products').insert(batch);
+          if (error) {
+            log(`Supabase Error: ${error.message}`, 'error');
+            throw error;
+          }
+        }
+
+        log('Migration completed successfully!', 'success');
+      } catch (err) {
+        log(`Migration failed: ${err.message}`, 'error');
+        console.error(err);
+      } finally {
+        startBtn.disabled = false;
+      }
+    }
+
+    startBtn.addEventListener('click', startMigration);
+  </script>
+</body>
+</html>
