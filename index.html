@@ -1,842 +1,449 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE GEMNASIUM</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="THE GEMNASIUM — The ultimate vault for elite TCG & comic collectors. Browse premium graded Pokémon, Magic: The Gathering, Lorcana, One Piece singles, and key issue comics. PSA 10, BGS, CGC certified.">
+  <meta name="keywords" content="TCG, trading cards, Pokémon, MTG, comics, graded cards, PSA 10, CGC 9.8, collectibles, marketplace">
+  <meta name="theme-color" content="#DC2626">
+  <title>THE GEMNASIUM — Elite TCG & Comic Collector's Vault</title>
+  
+  <link rel="stylesheet" href="css/globals.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/admin.css">
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d0a1b;
-            color: #e5e5e5;
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: #4a044e; border-radius: 4px; }
-        ::-webkit-scrollbar-track { background: #1f083d; }
-
-        .tab-button.active {
-            @apply border-b-4 border-red-500 text-red-400 font-semibold;
-        }
-
-.tab-button {
-    @apply text-gray-300 font-semibold bg-gray-800/60;
-}
-
-.tab-button.active {
-    @apply bg-red-600 text-white border-red-500 shadow-lg shadow-red-500/50;
-}
-
-
-        .category-button.active {
-            @apply bg-red-600 text-white shadow-lg shadow-red-500/50;
-        }
-
-        /* FAQ logo glow animation */
-        .faq-logo-glow {
-            animation: redGlow 2s infinite ease-in-out;
-        }
-
-@keyframes fallSpinCW {
-    0% {
-        transform: translateY(-60px) rotate(0deg);
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-@keyframes fallSpinCCW {
-    0% {
-        transform: translateY(-60px) rotate(0deg);
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(110vh) rotate(-360deg);
-        opacity: 0;
-    }
-}
-
-@keyframes rgbGlowPrice {
-    0%   { color: rgb(255, 77, 77); }
-    25%  { color: rgb(255, 200, 77); }
-    50%  { color: rgb(77, 255, 77); }
-    75%  { color: rgb(77, 77, 255); }
-    100% { color: rgb(255, 77, 77); }
-}
-
-.rgb-price {
-    animation: rgbGlowPrice 3s infinite linear;
-}
-
-        @keyframes redGlow {
-            0%, 100% {
-                text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff1a1a, 0 0 15px #ff0000, 0 0 20px #ff3333;
-                color: #ff4d4d;
-            }
-            50% {
-                text-shadow: 0 0 15px #ff4d4d, 0 0 25px #ff1a1a, 0 0 35px #ff0000, 0 0 45px #ff3333;
-                color: #ff6666;
-            }
-        }
-
-        /* RGB glow animation for THE GEMNASIUM header */
-        .logo-text {
-            animation: rgbGlow 6s infinite linear;
-            font-weight: 800;
-            text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d, 0 0 15px #ff4d4d, 0 0 20px #ff4d4d;
-        }
-
-        @keyframes rgbGlow {
-            0%   { color: rgb(255, 77, 77);   text-shadow: 0 0 5px rgb(255,77,77), 0 0 10px rgb(255,77,77), 0 0 15px rgb(255,77,77), 0 0 20px rgb(255,77,77); }
-            25%  { color: rgb(255, 200, 77);  text-shadow: 0 0 5px rgb(255,200,77), 0 0 10px rgb(255,200,77), 0 0 15px rgb(255,200,77), 0 0 20px rgb(255,200,77); }
-            50%  { color: rgb(77, 255, 77);   text-shadow: 0 0 5px rgb(77,255,77), 0 0 10px rgb(77,255,77), 0 0 15px rgb(77,255,77), 0 0 20px rgb(77,255,77); }
-            75%  { color: rgb(77, 77, 255);   text-shadow: 0 0 5px rgb(77,77,255), 0 0 10px rgb(77,77,255), 0 0 15px rgb(77,77,255), 0 0 20px rgb(77,77,255); }
-            100% { color: rgb(255, 77, 77);   text-shadow: 0 0 5px rgb(255,77,77), 0 0 10px rgb(255,77,77), 0 0 15px rgb(255,77,77), 0 0 20px rgb(255,77,77); }
-        }
-
-        @keyframes shine {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.8;
-                filter: drop-shadow(0 0 5px rgba(248, 113, 113, 0.7));
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 1;
-                filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.9));
-            }
-        }
-
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
-
-        #preloader {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: #0d0a1b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 1;
-        }
-
-#price-min-label, #price-max-label {
-    transition: all 0.2s ease;
-}
-
-/* Price slider custom red */
-#price-min,
-#price-max {
-    -webkit-appearance: none; /* remove default styling */
-    width: 8rem; /* matches w-32 */
-    height: 6px;
-    background: #660000; /* dark red track */
-    border-radius: 9999px;
-    outline: none;
-}
-
-#price-min::-webkit-slider-thumb,
-#price-max::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    background: #ff1a1a; /* bright red thumb */
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid #fff; /* optional white border */
-    transition: background 0.2s ease;
-}
-
-#price-min::-moz-range-thumb,
-#price-max::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    background: #ff1a1a;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid #fff;
-}
-
-        #preloader .diamond-logo { animation: shine 1.5s infinite ease-in-out; }
-        .fade-out { animation: fadeOut 0.8s forwards; }
-
-        /* FAQ DROPDOWN ANIMATION */
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 1.0s ease, opacity 1.0s ease;
-            opacity: 0;
-        }
-
-        .faq-item.open .faq-answer {
-            max-height: 300px;
-            opacity: 1;
-        }
-
-    #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #0d0a1b;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        opacity: 1;
-    }
-
-    #preloader .diamond-logo {
-        animation: shine 1.5s infinite ease-in-out;
-    }
-
-    .fade-out {
-        animation: fadeOut 0.8s forwards;
-    }
-
-    /* FAQ DROPDOWN ANIMATION */
-    .faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s ease, opacity 0.4s ease;
-        opacity: 0;
-    }
-
-    .faq-item.open .faq-answer {
-        max-height: 300px;
-        opacity: 1;
-    }
-
-/* FALLING / SPINNING DIAMONDS  */
-#diamond-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.diamond {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    background: url('images/logo.png') no-repeat center/contain;
-    opacity: 0.5;
-}
-
-@keyframes fallSpin {
-    0% {
-        transform: translateY(-60px) rotate(0deg);
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-</style>
+  <!-- Supabase & EmailJS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@latest/dist/email.min.js"></script>
 </head>
-<body class="min-h-screen antialiased">
-<div id="diamond-container"></div>
+<body>
+  <!-- ═══ Navigation ═══ -->
+  <div id="navbar-root"></div>
 
-<div id="preloader" class="transition-opacity duration-700">
-    <div class="diamond-logo text-red-500">
-        <img src="images/logo.png" alt="Gemnasium Logo" class="w-28 h-28 sm:w-36 sm:h-36 object-contain">
+  <!-- ═══ View: Home ═══ -->
+  <div id="view-home">
+    <!-- ═══ Hero Section ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <div class="hero__bg-image" style="background-image: url('assets/hero-bg.png')"></div>
     </div>
-</div>
-
-<div class="relative z-10 max-w-7xl mx-auto p-4 sm:p-8">
-
-<header class="relative flex flex-col items-center justify-center space-y-4 py-8 md:py-12 border-b border-gray-800">
-    <div class="text-red-500 hover:rotate-3 transition-transform duration-300">
-        <img src="images/logo.png" alt="Gemnasium Logo" class="w-16 h-16 sm:w-20 sm:h-20 object-contain">
+    <div class="hero__particles" id="hero-particles"></div>
+    
+    <div class="hero__content">
+      <div class="hero__eyebrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
+        THE GEMNASIUM
+      </div>
+      
+      <h1 class="hero__title">
+        <span class="hero__title-gem">THE GEM</span><span class="hero__title-nasium">NASIUM</span>
+      </h1>
+      <p class="hero__desc">Selling the Best Sports Cards, TCGs, Comics, Fine Art.</p>
+      <div class="hero__actions">
+        <a href="shop.html" class="btn btn-primary">Shop</a>
+      </div>
+      
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <div class="hero__stat-value">100%</div>
+          <div class="hero__stat-label">Satisfaction Rate</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-value">FAST</div>
+          <div class="hero__stat-label">Shipping</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-value">100+</div>
+          <div class="hero__stat-label">Happy Collectors</div>
+        </div>
+      </div>
     </div>
-<h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight logo-text" id="logo-text">
-    THE GEMNASIUM
-</h1>
-    <p class="text-gray-400 text-lg">Selling the rarest Sports Cards, TCGs, Comics, and Fine Art.</p>
-</header>
-
-<nav class="mt-8 mb-6 border-b border-gray-800">
-    <div class="flex flex-wrap justify-center sm:justify-start -mb-px space-x-2 sm:space-x-4" role="tablist">
-
-        <button id="tab-home" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('home')">Home</button>
-
-        <button id="tab-showroom" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('showroom')">The Showroom</button>
-
-        <button id="tab-reviews" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('reviews')">Reviews</button>
-
-        <button id="tab-contact" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('contact')">Contact</button>
-
-        <button id="tab-faq" class="tab-button px-5 py-2 border-2 border-transparent rounded-lg transition-all duration-300 hover:border-red-500 hover:shadow-md hover:shadow-red-500/50" onclick="switchTab('faq')">FAQ</button>
-
-    </div>
-</nav>
+  </section>
 
 
-<div id="tab-content">
 
-    <!-- HOME TAB -->
-    <div id="content-home" class="tab-content space-y-6 pt-6">
+  </div> <!-- End #view-home -->
 
-        <div class="bg-gray-800/50 p-6 rounded-xl shadow-lg border border-red-500/30 space-y-4">
-            <h2 class="text-3xl font-bold text-red-400 mb-2 text-center">Welcome to the GEMNASIUM</h2>
+  <!-- ═══ View: Admin ═══ -->
+  <div id="view-admin" style="display: none;">
+    <main class="admin-page">
+      <!-- ═══ Admin Header ═══ -->
+      <div class="admin-header">
+        <div class="container">
+          <div class="admin-header__inner">
+            <div class="admin-header__left">
+              <div class="admin-header__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              </div>
+              <div>
+                <h1 class="admin-header__title">Command Center</h1>
+                <p class="admin-header__subtitle">Welcome Admin — manage inventory, track portfolio, and handle orders.</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:var(--space-3);">
+              <button class="btn btn-secondary" onclick="alert('Export feature coming soon!')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                Export CSV
+              </button>
+              <button class="btn btn-primary" id="add-item-btn" onclick="openAddModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                Add Item
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <p class="text-gray-300 leading-relaxed">
-                <img src="images/logo.png" class="inline-block w-5 h-5 mr-1 align-text-top">
-                <strong>The Gemnasium</strong> is your curated destination for rare and collectible items —
-                from Cards, Comics, Kicks, and Antiques to Artwork and other one-of-a-kind Gems.
-            </p>
+      <div class="container" style="margin-bottom: var(--space-6); border-bottom: 1px solid var(--border-subtle);">
+        <div style="display:flex; gap:var(--space-4);">
+          <button class="btn btn-ghost active" onclick="switchAdminMainTab('dashboard')" id="admin-tab-dashboard" style="border-radius: var(--radius-sm); padding: var(--space-2) var(--space-4);">Dashboard & Inventory</button>
+          <button class="btn btn-ghost" onclick="switchAdminMainTab('orders')" id="admin-tab-orders" style="border-radius: var(--radius-sm); padding: var(--space-2) var(--space-4);">Orders</button>
+          <button class="btn btn-ghost" onclick="switchAdminMainTab('users')" id="admin-tab-users" style="border-radius: var(--radius-sm); padding: var(--space-2) var(--space-4);">User Accounts</button>
+        </div>
+      </div>
 
-            <p class="text-gray-300 leading-relaxed">
-                <img src="images/logo.png" class="inline-block w-5 h-5 mr-1 align-text-top">
-                We pride ourselves on offering a premium experience: clear communication,
-                transparency, reliable service, and smooth transactions.
-            </p>
+      <div id="admin-view-dashboard" style="display: block;">
+        <!-- ═══ Metrics Grid ═══ -->
+        <section class="metrics-section">
+          <div class="container">
+            <div class="metrics-grid" id="metrics-grid">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </section>
 
-            <p class="text-gray-300 leading-relaxed">
-                <img src="images/logo.png" class="inline-block w-5 h-5 mr-1 align-text-top">
-                Don’t hesitate to reach out with any questions — we’re always here to help.
-            </p>
+      <!-- ═══ Inventory Section ═══ -->
+      <section class="inventory-section">
+        <div class="container">
+          <div class="inventory-header">
+            <div class="inventory-header__left">
+              <h2 class="inventory-header__title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                Inventory Management
+              </h2>
+              <div class="inventory-tabs" id="inventory-tabs">
+                <button class="inventory-tab active" data-tab="all" onclick="switchInventoryTab('all')">All Artifacts</button>
+                <button class="inventory-tab" data-tab="sports" onclick="switchInventoryTab('sports')">Sports Cards</button>
+                <button class="inventory-tab" data-tab="tcg" onclick="switchInventoryTab('tcg')">TCG</button>
+                <button class="inventory-tab" data-tab="comics" onclick="switchInventoryTab('comics')">Comics & Marvel</button>
+                <button class="inventory-tab" data-tab="art" onclick="switchInventoryTab('art')">Fine Art</button>
+                <button class="inventory-tab" data-tab="other" onclick="switchInventoryTab('other')">Other Gems</button>
+              </div>
+            </div>
+            <div class="inventory-search">
+              <input type="search" class="inventory-search__input" id="inventory-search" placeholder="Search inventory..." oninput="filterInventory()">
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="quick-stats" id="quick-stats">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Inventory Table -->
+          <div class="inventory-table-wrap">
+            <table class="data-table" id="inventory-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Category</th>
+                  <th>Set / Publisher</th>
+                  <th>Condition</th>
+                  <th>Cert #</th>
+                  <th>Stock</th>
+                  <th>Price</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-tbody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      </div> <!-- End #admin-view-dashboard -->
+
+      <!-- ═══ User Management Section ═══ -->
+      <div id="admin-view-users" style="display: none;">
+        <section class="inventory-section">
+          <div class="container">
+            <div class="inventory-header">
+              <div class="inventory-header__left">
+                <h2 class="inventory-header__title">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  User Accounts
+                </h2>
+              </div>
+              <div class="inventory-search">
+                <button class="btn btn-secondary" onclick="loadAdminUsers()">Refresh</button>
+              </div>
+            </div>
             
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
-                <span class="text-4xl text-red-500 mb-2 block">🏈</span>
-                <p class="font-semibold">Sports Cards</p>
-                <p class="text-sm text-gray-400">NFL - MLB - NBA - UFC</p>
+            <div class="inventory-table-wrap">
+              <table class="data-table" id="users-table">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="users-tbody">
+                  <!-- Populated by JS -->
+                  <tr><td colspan="5" style="text-align:center; padding:var(--space-8); color:var(--gm-slate-400);">Loading users...</td></tr>
+                </tbody>
+              </table>
             </div>
+          </div>
+        </section>
+      </div> <!-- End #admin-view-users -->
 
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
-                <span class="text-4xl text-red-500 mb-2 block">🃏</span>
-                <p class="font-semibold">TCG</p>
-                <p class="text-sm text-gray-400">Marvel - Dragon Ball - Pokemon</p>
+      <div id="admin-view-orders" style="display: none;">
+        <section class="inventory-section">
+          <div class="container">
+            <div class="inventory-header" style="margin-bottom: var(--space-4);">
+              <div class="inventory-header__left">
+                <h2 class="inventory-header__title">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                  Orders Management
+                </h2>
+              </div>
             </div>
-
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
-                <span class="text-4xl text-red-500 mb-2 block">🦸</span>
-                <p class="font-semibold">Comics</p>
-                <p class="text-sm text-gray-400">Marvel - DC - Independent</p>
+            <div class="inventory-table-wrapper">
+              <table class="inventory-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Tracking #</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-tbody">
+                  <!-- Populated by JS -->
+                  <tr><td colspan="7" style="text-align:center; padding:var(--space-8); color:var(--gm-slate-400);">Loading orders...</td></tr>
+                </tbody>
+              </table>
             </div>
-
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg border border-red-500/40 text-center hover:shadow-red-500/50">
-                <span class="text-4xl text-red-500 mb-2 block">🎨</span>
-                <p class="font-semibold">Other Gems</p>
-                <p class="text-sm text-gray-400">Artwork - Gear</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- GALLERY TAB -->
-    <div id="content-showroom" class="tab-content pt-6 hidden">
-        <h2 class="text-3xl font-bold text-red-400 mb-6">The Current Collection</h2>
-
-        <nav class="mb-8 border-b border-gray-800 pb-4">
-            <div class="flex flex-wrap justify-center sm:justify-start gap-3">
-                <button class="category-button active px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
-        data-category="all"
-        onclick="filterGallery('all', this)">All Artifacts</button>
-
-                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
-                        onclick="filterGallery('sports', this)">Sports Cards</button>
-
-                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
-                        onclick="filterGallery('tcg', this)">TCG</button>
-
-                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
-                        onclick="filterGallery('comics', this)">Comics & Marvel</button>
-
-                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
-                        onclick="filterGallery('art', this)">Fine Art</button>
-
-                <button class="category-button px-4 py-2 text-sm rounded-full bg-gray-700/50 hover:bg-red-700"
-                        onclick="filterGallery('other', this)">Other Gems</button>
-            </div>
-        </nav>
-
-<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-<!-- Price Slider -->
-<div class="flex items-center gap-2">
-    <label class="text-gray-300 font-semibold">Price:</label>
-    <input type="range" id="price-min" min="0" max="1000" value="0" step="10" class="w-32">
-    <span class="text-gray-400" id="price-min-label">$0</span>
-    <span class="text-gray-300">-</span>
-    <input type="range" id="price-max" min="0" max="1000" value="1000" step="10" class="w-32">
-    <span class="text-gray-400" id="price-max-label">$1000</span>
-</div>
-
-    <!-- Sort Dropdown -->
-    <div>
-        <select id="sort-options" class="bg-gray-800 text-gray-300 rounded px-3 py-1 border border-red-500">
-            <option value="az">A-Z</option>
-            <option value="za">Z-A</option>
-            <option value="low-high">Price: Low → High</option>
-            <option value="high-low">Price: High → Low</option>
-        </select>
-    </div>
-</div>
-
-        <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
-           <!-- ITEM 1 -->
-<div class="gallery-item sports" data-category="sports" data-price="300">
-    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/card1.png" alt="Sports Card" class="w-full h-auto object-cover">
-        <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">ILIA TOPURIA BIG TICKET</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $300</p>
-        </div>
-    </div>
-</div>
-
-<!-- ITEM 2 -->
-<div class="gallery-item tcg" data-category="tcg" data-price="25">
-    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/Amazing_Blast.jpg" alt="Amazing Blastoise" class="w-full h-auto object-cover">
-        <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">Amazing Blastoise</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $25</p>
-        </div>
-    </div>
-</div>
-
-<!-- ITEM 3 -->
-<div class="gallery-item art" data-category="comics" data-price="25">
-    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/Elektra.jpg" alt="Elektra" class="w-full h-auto object-cover">
-        <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">Elektra</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $25</p>
-        </div>
-    </div>
-</div>
-
-<!-- ITEM 4 -->
-<div class="gallery-item art" data-category="comics" data-price="300">
-    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/Drax_Thanos_Battle.jpg" alt="Art Print" class="w-full h-auto object-cover">
-        <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">Drax Thanos Battle</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $300</p>
-        </div>
-    </div>
-</div>
-
-<!-- ITEM 5 -->
-<div class="gallery-item art" data-category="comics" data-price="150">
-    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/FinFangFoom_IronMan.jpg" alt="Art Print" class="w-full h-auto object-cover">
-        <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">FinFangFoom vs Iron Man</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $150</p>
-        </div>
-    </div>
-</div>
-
-<!-- ITEM 6 -->
-<div class="gallery-item art" data-category="other" data-price="200">
-    <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl hover:shadow-red-500/50 transition hover:scale-[1.02]">
-        <img src="cards/HP_Front.jpg" alt="Other" class="w-full h-auto object-cover">
-        <div class="p-4">
-            <h3 class="font-bold text-lg text-red-300">The High Priestess</h3>
-            <p class="text-xl font-extrabold text-red-500 mt-1">Priced At $200</p>
-        </div>
-    </div>
-</div>
-
-        </div>
-    </div>
-<!-- REVIEWS TAB CONTENT -->
-<div id="content-reviews" class="tab-content space-y-6 pt-6 hidden">
-
-  <h2 class="text-3xl font-bold text-red-400 mb-4 text-center">Customer Reviews</h2>
-
-  <!-- Left-to-Right Scrolling -->
-  <div class="overflow-hidden whitespace-nowrap relative border-t border-b border-gray-800 py-4">
-    <div class="inline-block animate-scroll-left space-x-8">
-      <div class="inline-block review-box">
-        "Thank you! great service!!" – a***d
-      </div>
-    </div>
-  </div>
-
-  <!-- Right-to-Left Scrolling -->
-  <div class="overflow-hidden whitespace-nowrap relative border-t border-b border-gray-800 py-4">
-    <div class="inline-block animate-scroll-right space-x-8">
-      <div class="inline-block review-box">
-        "securely packed. as described. fast & smooth transaction. thanks!!!!!" – m***1
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<style>
-/* Review box styling with glowing red edges */
-.review-box {
-  background-color: rgba(31, 8, 61, 0.6);
-  padding: 1rem 1.5rem;
-  border-radius: 1rem;
-  border: 2px solid #ff1a1a;
-  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff4d4d;
-  color: #f0f0f0;
-  display: inline-block;
-  min-width: 250px;
-  font-weight: 500;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.review-box:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px #ff1a1a, 0 0 25px #ff4d4d;
-}
-
-/* Scrolling animations */
-@keyframes scrollLeft {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0%); }
-}
-
-@keyframes scrollRight {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
-}
-
-.animate-scroll-left {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scrollLeft 20s linear infinite; /* slower */
-}
-
-.animate-scroll-right {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scrollRight 25s linear infinite; /* slower */
-}
-</style>
-
-    <!-- CONTACT TAB -->
-    <div id="content-contact" class="tab-content pt-6 hidden">
-        <h2 class="text-3xl font-bold text-red-400 mb-8 text-center">Connect & Shop</h2>
-
-        <div class="max-w-md mx-auto space-y-6">
-
-            <a href="https://www.instagram.com/The_Gemnasium/" target="_blank"
-               class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition border border-red-500/30">
-                <i class="fab fa-instagram text-3xl text-pink-500"></i>
-                <span class="text-xl font-semibold text-gray-100">Follow Our Instagram</span>
-            </a>
-
-            <a href="https://www.ebay.com/str/thegemnasium" target="_blank"
-               class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition border border-red-500/30">
-                <i class="fab fa-ebay text-3xl text-blue-500"></i>
-                <span class="text-xl font-semibold text-gray-100">See our Listings on Ebay</span>
-            </a>
-
-            <a href="mailto:DailyGrind.Gemnasium@gmail.com"
-               class="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-lg shadow-xl hover:bg-gray-700/70 transition border border-red-500/30">
-                <i class="fas fa-envelope text-3xl text-red-500"></i>
-                <span class="text-xl font-semibold text-gray-100">Inquire Directly (Email)</span>
-            </a>
-
-        </div>
-    </div>
-
-    <!-- FAQ TAB -->
-    <div id="content-faq" class="tab-content pt-6 hidden">
-
-        <h2 class="text-4xl font-bold text-red-400 mb-6 text-center flex items-center justify-center gap-3">
-    <img src="images/logo.png" class="w-10 h-10 drop-shadow-[0_0_12px_#ff0000] faq-logo-glow">
-    Frequently Asked Questions
-    <img src="images/logo.png" class="w-10 h-10 drop-shadow-[0_0_12px_#ff0000] faq-logo-glow">
-</h2>
-
-        <div class="max-w-3xl mx-auto space-y-4">
-
-            <!-- FAQ ITEM -->
-            <div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
-                        <h3 class="text-lg font-semibold text-red-400">How do I purchase an item?</h3>
-                    </div>
-                    <i class="fas fa-chevron-down text-gray-300 transition"></i>
-                </div>
-
-                <div class="faq-answer text-gray-300 mt-3">
-                    You can purchase through our <strong>eBay store</strong>, Instagram DMs, or the email listed in the Contact tab.
-                </div>
-
-                <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
-            </div>
-
-            <!-- FAQ ITEM -->
-            <div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
-                        <h3 class="text-lg font-semibold text-red-400">Do you ship internationally?</h3>
-                    </div>
-                    <i class="fas fa-chevron-down text-gray-300 transition"></i>
-                </div>
-
-                <div class="faq-answer text-gray-300 mt-3">
-                    Not as of yet. We currently ship only in the United States
-                </div>
-
-                <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
-            </div>
-
-            <!-- FAQ ITEM -->
-            <div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
-                        <h3 class="text-lg font-semibold text-red-400">When will my Heirloom be shipped?</h3>
-                    </div>
-                    <i class="fas fa-chevron-down text-gray-300 transition"></i>
-                </div>
-
-                <div class="faq-answer text-gray-300 mt-3">
-                    We usually ship same or next day!
-                </div>
-                <div class="faq-answer text-gray-300 mt-3">
-                    All purchased items include tracking and are always properly packaged!
-                </div>
-                <div class="faq-answer text-gray-300 mt-3">
-                    Combined shipping is available!
-                </div>
-
-                <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
-            </div>
-
-<!-- FAQ ITEM — WARRANTY -->
-<div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
-            <h3 class="text-lg font-semibold text-red-400">Is there a warranty on items?</h3>
-        </div>
-        <i class="fas fa-chevron-down text-gray-300 transition"></i>
-    </div>
-
-    <div class="faq-answer text-gray-300 mt-3">
-        Any damaged items during shipping are always covered so long as proper documentation and proof is provided!
-    </div>
-
-    <div class="faq-answer text-gray-300 mt-3">
-        If there is ever an issue, contact us — we always work to make it right.
-    </div>
-
-    <div class="faq-answer text-gray-300 mt-3">
-        Communication is key!
-    </div>
-
-    <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
-</div>
-
-            <!-- FAQ ITEM — RETURNS -->
-<div class="faq-item bg-gray-800/60 p-5 rounded-xl border border-red-500/30 shadow-xl cursor-pointer transition hover:bg-gray-800/80">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <img src="images/logo.png" class="w-6 h-6 drop-shadow-[0_0_8px_#ff0000]">
-            <h3 class="text-lg font-semibold text-red-400">What is your return policy?</h3>
-        </div>
-        <i class="fas fa-chevron-down text-gray-300 transition"></i>
-    </div>
-
-    <div class="faq-answer text-gray-300 mt-3">
-        All sales are final and no returns are accepted!
-    </div>
-
-    <div class="mt-4 h-px w-full bg-red-500/40 drop-shadow-[0_0_10px_#ff0000]"></div>
-</div>
-
-        </div>
-    </div>
-
-</div> <!-- end tab content -->
-</div> <!-- end wrapper -->
-
-<footer class="text-center py-6 mt-12 border-t border-gray-800">
-    <p class="text-gray-500 text-sm">&copy; 2025 THE GEMNASIUM. All rights reserved.</p>
-</footer>
-
-<script>
-function switchTab(tabName) {
-    // Hide all tab contents
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-    // Remove active class from all tab buttons
-    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-
-    // Show the selected tab
-    document.getElementById(`tab-${tabName}`).classList.add('active');
-    document.getElementById(`content-${tabName}`).classList.remove('hidden');
-
-    // If switching to gallery, re-filter items based on current price sliders
-if(tabName === 'showroom') {
-    const activeBtn = document.querySelector('#content-showroom .category-button.active') || 
-                      document.querySelector('#content-showroom .category-button');
-    filterGallery(activeBtn.dataset.category, activeBtn);
-  }
-}
-
-function filterGallery(category, clickedButton) {
-    const items = document.querySelectorAll('.gallery-item');
-    const buttons = document.querySelectorAll('.category-button');
-
-    buttons.forEach(b => b.classList.remove('active'));
-    clickedButton.classList.add('active');
-
-    const minPrice = Number(document.getElementById('price-min').value);
-    const maxPrice = Number(document.getElementById('price-max').value);
-
-    items.forEach(item => {
-        const itemCategories = item.dataset.category.split(' ');
-        const itemPrice = Number(item.dataset.price);
-
-        const matchesCategory = category === 'all' || itemCategories.includes(category);
-        const matchesPrice = itemPrice >= minPrice && itemPrice <= maxPrice;
-
-        item.classList.toggle('hidden', !(matchesCategory && matchesPrice));
-    });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    // FAQ dropdown
-    document.querySelectorAll(".faq-item").forEach(item => {
-        item.addEventListener("click", () => {
-            item.classList.toggle("open");
-            item.querySelector("i").classList.toggle("rotate-180");
-        });
-    });
-
-    // Rainbow letters
-    const logo = document.getElementById("logo-text");
-    const text = logo.textContent.trim();
-    logo.textContent = '';
-    text.split('').forEach((char, i) => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        span.style.display = 'inline-block';
-        span.style.marginRight = i === text.length - 1 ? '0' : '0.15em';
-        span.style.animation = `rgbGlow 6s infinite linear ${i * 0.1}s`;
-        logo.appendChild(span);
-    });
-
-// Sorting gallery items
-document.getElementById('sort-options').addEventListener('change', () => {
-    const gallery = document.getElementById('gallery-grid');
-    const items = Array.from(gallery.querySelectorAll('.gallery-item'));
-    const sortValue = document.getElementById('sort-options').value;
-
-    items.sort((a, b) => {
-        if (sortValue === 'az') {
-            return a.querySelector('h3').textContent.localeCompare(b.querySelector('h3').textContent);
-        } else if (sortValue === 'za') {
-            return b.querySelector('h3').textContent.localeCompare(a.querySelector('h3').textContent);
-        } else if (sortValue === 'low-high') {
-            return Number(a.dataset.price) - Number(b.dataset.price);
-        } else if (sortValue === 'high-low') {
-            return Number(b.dataset.price) - Number(a.dataset.price);
+          </div>
+        </section>
+      </div> <!-- End #admin-view-orders -->
+
+      <script>
+        function switchAdminMainTab(tab) {
+          document.getElementById('admin-tab-dashboard').classList.remove('active');
+          document.getElementById('admin-tab-users').classList.remove('active');
+          document.getElementById('admin-tab-orders').classList.remove('active');
+          document.getElementById('admin-tab-' + tab).classList.add('active');
+          
+          document.getElementById('admin-view-dashboard').style.display = tab === 'dashboard' ? 'block' : 'none';
+          document.getElementById('admin-view-users').style.display = tab === 'users' ? 'block' : 'none';
+          document.getElementById('admin-view-orders').style.display = tab === 'orders' ? 'block' : 'none';
+          
+          document.getElementById('admin-tab-dashboard').style.background = 'transparent';
+          document.getElementById('admin-tab-users').style.background = 'transparent';
+          document.getElementById('admin-tab-orders').style.background = 'transparent';
+          document.getElementById('admin-tab-' + tab).style.background = 'rgba(255,255,255,0.1)';
+
+          if(tab === 'users' && typeof loadAdminUsers === 'function') loadAdminUsers();
+          if(tab === 'orders' && typeof loadAdminOrders === 'function') loadAdminOrders();
         }
-        return 0;
-    });
+        document.getElementById('admin-tab-dashboard').style.background = 'rgba(255,255,255,0.1)';
+      </script>
 
-    // Re-append in sorted order
-    items.forEach(item => gallery.appendChild(item));
-});
+    <!-- ═══ Add Item Modal ═══ -->
+    <div class="modal-overlay" id="add-modal-overlay" onclick="if(event.target === this) closeAddModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal__header">
+          <h3 class="modal__title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:6px;color:var(--gm-red-500)"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            Add New Item
+          </h3>
+          <button class="modal__close" onclick="closeAddModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <form id="add-item-form" onsubmit="handleAddItem(event)">
+            <!-- Category Selection -->
+            <div class="form-group">
+              <label class="form-label" for="item-category">Category</label>
+              <select class="form-select" id="item-category" onchange="selectModalCategory(this.value)">
+                <option value="sports">Sports Cards</option>
+                <option value="tcg" selected>TCG</option>
+                <option value="comics">Comics & Marvel</option>
+                <option value="art">Fine Art</option>
+                <option value="other">Other Gems</option>
+              </select>
+            </div>
 
+            <!-- Title -->
+            <div class="form-group">
+              <label class="form-label" for="item-title">Title *</label>
+              <input type="text" class="form-input" id="item-title" placeholder="e.g., Charizard VSTAR Rainbow Rare" required>
+            </div>
 
-    // Default tab
-    switchTab('home');
+            <!-- Dynamic Fields Container -->
+            <div id="modal-dynamic-fields">
+              <!-- Populated by JS based on category -->
+            </div>
 
-    // Preloader
-    setTimeout(() => document.getElementById('preloader').classList.add('fade-out'), 1500);
+            <!-- Common Fields -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="item-condition">Condition</label>
+                <select class="form-select" id="item-condition" onchange="toggleGradeFields()">
+                  <option value="ungraded">Ungraded</option>
+                  <option value="graded">Graded</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="item-price">Price ($) *</label>
+                <input type="number" class="form-input" id="item-price" placeholder="0.00" step="0.01" min="0" required>
+              </div>
+            </div>
 
-    // Price sliders
-function getActiveCategoryButton() {
-    return document.querySelector('#content-showroom .category-button.active') || 
-           document.querySelector('#content-showroom .category-button');
-}
+            <!-- Grade Fields (shown when condition = graded) -->
+            <div id="grade-fields" style="display:none;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="item-grading-company">Grading Company</label>
+                  <select class="form-select" id="item-grading-company">
+                    <option value="PSA">PSA</option>
+                    <option value="BGS">BGS / Beckett</option>
+                    <option value="CGC">CGC</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="item-grade">Grade</label>
+                  <input type="number" class="form-input" id="item-grade" placeholder="10" step="0.5" min="1" max="10">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="item-cert">Certification Number</label>
+                <input type="text" class="form-input" id="item-cert" placeholder="e.g., 82943716">
+              </div>
+            </div>
 
-// Cache elements
-const priceMin = document.getElementById('price-min');
-const priceMax = document.getElementById('price-max');
-const priceMinLabel = document.getElementById('price-min-label');
-const priceMaxLabel = document.getElementById('price-max-label');
+            <div class="form-group">
+              <label class="form-label" for="item-stock">Stock Quantity</label>
+              <input type="number" class="form-input" id="item-stock" placeholder="1" min="0" value="1">
+            </div>
 
-function updateGallery() {
-    const activeBtn = getActiveCategoryButton();
-    filterGallery(activeBtn.dataset.category, activeBtn);
-}
+            <!-- Image Upload -->
+            <div class="form-group">
+              <label class="form-label">Image</label>
+              <div class="image-upload" onclick="document.getElementById('item-image').click()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/><line x1="16" x2="22" y1="5" y2="5"/><line x1="19" x2="19" y1="2" y2="8"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                <span>Click to upload image</span>
+              </div>
+              <input type="file" id="item-image" accept="image/*" style="display:none;">
+            </div>
+          </form>
+        </div>
+        <div class="modal__footer">
+          <button type="button" class="btn btn-ghost" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" form="add-item-form">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            Add to Inventory
+          </button>
+        </div>
+      </div>
+    </div>
+  </div> <!-- End #view-admin -->
 
-// Min slider
-priceMin.addEventListener('input', () => {
-    priceMinLabel.textContent = `$${priceMin.value}`;
-    updateGallery();
-});
+  <!-- ═══ Footer ═══ -->
+  <div id="footer-root"></div>
 
-// Max slider
-priceMax.addEventListener('input', () => {
-    priceMaxLabel.textContent = `$${priceMax.value}`;
-    updateGallery();
-});
+  <!-- ═══ Cart Drawer ═══ -->
+  <div id="cart-root"></div>
+  <script src="js/bundle-landing-v4.js"></script>
 
-    document.getElementById('price-max').addEventListener('input', () => {
-        document.getElementById('price-max-label').textContent = `$${document.getElementById('price-max').value}`;
-        filterGallery(
-            document.querySelector('.category-button.active').dataset.category,
-            document.querySelector('.category-button.active')
-        );
-    });
-});
+    <!-- ═══ Edit Order Modal ═══ -->
+    <div class="modal-overlay" id="edit-order-modal-overlay" onclick="if(event.target === this) closeEditOrderModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal__header">
+          <h3 class="modal__title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:6px;color:var(--gm-blue-500)"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            Update Order
+          </h3>
+          <button class="modal__close" onclick="closeEditOrderModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <form id="edit-order-form" onsubmit="handleEditOrderSubmit(event)">
+            <input type="hidden" id="edit-order-id">
+            
+            <div class="form-group">
+              <label class="form-label" for="edit-order-status">Order Status</label>
+              <select class="form-select" id="edit-order-status" required>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="shipped">Shipped</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="edit-order-tracking">Tracking Number</label>
+              <input type="text" class="form-input" id="edit-order-tracking" placeholder="e.g. 1Z9999999999999999">
+            </div>
 
-/* Falling diamonds */
-function createDiamond() {
-    const container = document.getElementById("diamond-container");
+            <div style="display:flex; justify-content:flex-end; gap:var(--space-3); margin-top:var(--space-6);">
+              <button type="button" class="btn btn-ghost" onclick="closeEditOrderModal()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Edit User Modal ═══ -->
+    <div class="modal-overlay" id="edit-user-modal-overlay" onclick="if(event.target === this) closeEditUserModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal__header">
+          <h3 class="modal__title" id="edit-user-modal-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-3px;margin-right:6px;color:var(--gm-blue-500)"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Edit User
+          </h3>
+          <button class="modal__close" onclick="closeEditUserModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <form id="edit-user-form" onsubmit="handleEditUserSubmit(event)">
+            <input type="hidden" id="edit-user-id">
+            <input type="hidden" id="edit-user-action">
+            <input type="hidden" id="edit-user-email">
+            
+            <div class="form-group" id="edit-user-name-group">
+              <label class="form-label" for="edit-user-name">New Username</label>
+              <input type="text" class="form-input" id="edit-user-name" placeholder="Username">
+            </div>
+
+            <div class="form-group" id="edit-user-password-group" style="display:none;">
+              <p style="color:var(--gm-slate-400); font-size:14px; margin-bottom:1rem;">
+                Click "Send Reset Email" to send a password reset link directly to the user's email address.
+              </p>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:var(--space-3); margin-top:var(--space-6);">
+              <button type="button" class="btn btn-ghost" onclick="closeEditUserModal()">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="edit-user-submit-btn">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     
-    if (container.children.length >= 20) return; // max 20 diamonds at a time
-    
-    const diamond = document.createElement("div");
-    diamond.classList.add("diamond");
-
-    diamond.style.left = Math.random() * 100 + "vw";
-    const duration = 4 + Math.random() * 6;
-    diamond.style.animationDuration = duration + "s";
-    diamond.style.opacity = (0.3 + Math.random() * 0.4).toString();
-
-    const hue = Math.floor(Math.random() * 360);
-    diamond.style.filter = `hue-rotate(${hue}deg)`;
-
-    // Randomly decide spin direction
-    const spinDirection = Math.random() < 0.5 ? 360 : -360;
-    diamond.style.animationName = `fallSpin${spinDirection > 0 ? 'CW' : 'CCW'}`;
-
-    container.appendChild(diamond);
-    diamond.addEventListener("animationend", () => diamond.remove());
-}
-
-setInterval(createDiamond, 400);
-
-
-</script>
-
-</body>
+  </body>
 </html>
